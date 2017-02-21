@@ -13,5 +13,20 @@
     <p>
       For help sending push notifications, join the <a href="https://apps.ionic.io/signup" target="_blank">Ionic Platform</a> and check out <a href="http://docs.ionic.io/docs/push-overview" target="_blank">Ionic Push</a>. We also have other services available.
     </p>
+
+
+              <ion-card>
+                  <ion-card-content>
+
+                      <button (click)="takePicture()">Take a Picture</button>
+
+                      <div ng-show="base64Image !== null">
+                          Latest Picture:
+                          <img [src]="base64Image" *ngIf="base64Image" />
+                      </div>
+                  </ion-card-content>
+              </ion-card>
+ 
+
   </ion-content>
 </ion-view>

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,7 +23,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider) {
+    var loggined = null
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -87,7 +88,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
                  controller: 'PictureDetailCtrl'
              }
          }
-     })
+  })
+
+  .state('tab.takePicture', {
+      url: '/takePicture',
+      views: {
+          'takePicture': {
+              templateUrl: 'templates/takePicture.html',
+              controller: 'TakePictureCtrl'
+          }
+      }
+  })
 
   .state('tab.account', {
     url: '/account',
@@ -97,9 +108,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         controller: 'AccountCtrl'
       }
     }
+  })
+
+  .state('login', {
+      url: '/login',
+         templateUrl: 'templates/login.html',
+         controller: 'loginCtrl'
+     })
+
+  .state('signup', {
+      url: '/signup',
+      templateUrl: 'templates/signup.html',
+      controller: 'signupCtrl'
   });
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/allEvents');
+    // if none of the above states are matched, use this as the fallback
+  if (loggined === null) {
+      $urlRouterProvider.otherwise('/login');
+  } else {
+      $urlRouterProvider.otherwise('/tab/pictures');
+  }
 
 });
