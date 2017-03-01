@@ -8,7 +8,7 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
  .constant('ApiEndpoint', {
-     url: 'http://34.251.128.133:8080/api/events'
+     url: 'http://34.250.4.124:8080/api/mobiles'
  })
 
 .run(function($ionicPlatform) {
