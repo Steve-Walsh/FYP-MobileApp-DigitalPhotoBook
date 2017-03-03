@@ -39,11 +39,11 @@ angular.module('starter.controllers', [])
     // listen for the $ionicView.enter event:
     //
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url).then(function (res) {
-            var alertPopup = $ionicPopup.alert({
-                title: 'data get success!',
-                //template: res.data.object.title
-            })
+        $http.get(ApiEndpoint.url +"mobiles").then(function (res) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'data get success!',
+                    //template: res.data.object.title
+                })
             console.log('data ', res)
             $scope.feed = res.data;
         })
@@ -71,11 +71,23 @@ angular.module('starter.controllers', [])
     $scope.chat = Chats.get($stateParams.chatId);
 })
 
-.controller('PicturesCtrl', function ($scope, Pictures) {
+.controller('PicturesCtrl', function ($scope, Pictures, $http, ApiEndpoint, $ionicPopup) {
     $scope.settings = {
         enableFriends: true
     };
+    $scope.$on('$ionicView.enter', function (e) {
+        $http.get(ApiEndpoint.url + "users").then(function (res) {
+            var alertPopup = $ionicPopup.alert({
+                
+                    title: 'data get success!',
+                    //template: res.data.object.title
+                    
+            })
+            console.log('data ', res)
+            $scope.feed = res.data;
+        })
 
+    });
     //console.log("in pic ctrl")
     $scope.pictures = Pictures.all();
     $scope.remove = function (picture) {
