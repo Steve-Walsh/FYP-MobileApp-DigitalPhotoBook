@@ -1,7 +1,7 @@
 <ion-view view-title="Pictures">
     <ion-content>
         <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="picture in pictures" type="item-text-wrap" href="#/tab/pictures/{{picture.id}}">
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="picture in feed" type="item-text-wrap" href="#/tab/pictures/{{picture.id}}">
                 <img ng-src="{{picture.face}}">
                 <h2>{{picture.name}}</h2>
                 <p>{{picture.lastText}}  {{picture.id}}</p>
@@ -13,4 +13,7 @@
             </ion-item>
         </ion-list>
     </ion-content>
+
+
+
 </ion-view>

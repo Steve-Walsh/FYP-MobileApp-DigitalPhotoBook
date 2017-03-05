@@ -41,9 +41,35 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/tabs.html'
+    })
+
+    .state('durTab', {
+     url: '/durTab',
+     abstract: true,
+      templateUrl: 'templates/durTab.html'
+    })
+
+
+  .state('durTab.durEvent', {
+      url: '/durEvent',
+      views: {
+          'durTab-event': {
+              templateUrl: 'templates/durTab-event.html',
+              controller: 'DurEventCtrl'
+          }
+      }
   })
 
-  // Each tab has its own nav history stack:
+  .state('durTab.durPictures', {
+      url: '/durPictures',
+            views: {
+                'durTab-pictures': {
+                    templateUrl: 'templates/durTab-pictures.html',
+                    controller: 'DurPicturesCtrl'
+                }
+            }
+  })
+
 
   .state('tab.allEvents', {
       url: '/allEvents',

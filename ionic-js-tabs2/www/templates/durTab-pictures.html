@@ -1,0 +1,35 @@
+﻿<ion-view view-title="Current Pictures">
+    <ion-content class="has-footer">
+        <ion-list>
+            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="picture in pictures" type="item-text-wrap" href="#/tab/pictures/{{picture.id}}">
+                <img ng-src="{{picture.face}}">
+                <h2>{{picture.name}}</h2>
+                <p>{{picture.lastText}}  {{picture.id}}</p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+
+                <ion-option-button class="button-assertive" ng-click="remove(picture)">
+                    Delete
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+
+      
+
+
+
+        <div class="text-center">
+            <button class="button" ng-click="takePicture()">Take Picture</button>
+        </div>
+        
+
+
+    </ion-content>
+
+    <ion-footer-bar>
+        <div class="text-center">
+            <button class="button title" ng-click="takePicture()">Take Picture</button>
+        </div>
+    </ion-footer-bar>
+
+
+</ion-view>

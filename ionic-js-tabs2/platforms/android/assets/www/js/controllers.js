@@ -1,13 +1,22 @@
 angular.module('starter.controllers', [])
 
 //.constant('apiendpoint', {
-//    url: 'http://34.251.128.133:8080/api/events'
+//    url: 'http://34.252.51.64:8080/api/'
 //})
 
-.controller('AllEventsCtrl', function ($scope, $cordovaCamera, $cordovaFile) {
+.controller('AllEventsCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup) {
 
-       
+    $scope.$on('$ionicView.enter', function (e) {
+        $http.get(ApiEndpoint.url + "mobiles/events").then(function (res) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'data get success!',
+                //template: res.data.object.title
+            })
+            console.log('data ', res)
+            $scope.feed = res.data;
+        })
 
+    });
 
     $scope.takePicture = function () {
         var options = {
@@ -26,10 +35,9 @@ angular.module('starter.controllers', [])
             console.log("error" + err)
         });
     }
+})
 
 
-
-    })
     
 
 .controller('MyEventsCtrl', function ($scope, Chats, $cordovaCamera, $http, ApiEndpoint, $ionicPopup) {
@@ -75,11 +83,15 @@ angular.module('starter.controllers', [])
     $scope.settings = {
         enableFriends: true
     };
+
+    var userDetails = { email: "steve@email.com" , password : "password"};
+    //userDetails.email = 
+    //userDetails.password = "password"
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "users").then(function (res) {
+        $http.post(ApiEndpoint.url + "mobiles/login", userDetails).then(function (res) {
             var alertPopup = $ionicPopup.alert({
-                
-                    title: 'data get success!',
+                    
+                title: 'data get success!' + res.data.name,
                     //template: res.data.object.title
                     
             })
@@ -144,4 +156,73 @@ function ($scope, $stateParams) {
 function ($scope, $stateParams) {
 
 
-}]);
+}])
+
+
+.controller('DurPicturesCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup) {
+
+    $scope.$on('$ionicView.enter', function (e) {
+        $http.get(ApiEndpoint.url + "mobiles/pictures").then(function (res) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'data get success!',
+                //template: res.data.object.title
+            })
+            console.log('data ', res)
+            $scope.feed = res.data;
+        })
+    });
+    $scope.takePicture = function () {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: true
+        };
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function (err) {
+            console.log("error" + err)
+        });
+    }
+})
+
+.controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup) {
+
+    $scope.$on('$ionicView.enter', function (e) {
+        $http.get(ApiEndpoint.url + "mobiles/events").then(function (res) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'data get success!',
+                //template: res.data.object.title
+            })
+            console.log('data ', res)
+            $scope.feed = res.data;
+        })
+
+    });
+
+    $scope.takePicture = function () {
+        var options = {
+            quality: 75,
+            destinationType: Camera.DestinationType.DATA_URL,
+            sourceType: Camera.PictureSourceType.CAMERA,
+            allowEdit: true,
+            encodingType: Camera.EncodingType.JPEG,
+            popoverOptions: CameraPopoverOptions,
+            saveToPhotoAlbum: true
+        };
+
+        $cordovaCamera.getPicture(options).then(function (imageData) {
+            $scope.imgURI = "data:image/jpeg;base64," + imageData;
+        }, function (err) {
+            console.log("error" + err)
+        });
+    }
+})
+
+
+
+;
