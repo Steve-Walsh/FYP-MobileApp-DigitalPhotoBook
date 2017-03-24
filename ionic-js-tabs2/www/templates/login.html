@@ -1,18 +1,19 @@
 <ion-view title="Login" id="page5">
-  <ion-content padding="true" class="has-header">
-    <form id="login-form1" class="list">
+  <ion-content padding="true" class="has-header" overflow-scroll="false">
+    <form id="userDetails" class="list">
       <ion-list id="login-list1">
-        <label class="item item-input" id="login-input1">
+        <label class="item item-input" id="username">
           <span class="input-label">Username</span>
-          <input type="text" placeholder="">
+          <input type="text" placeholder="" ng-model="data.email">
         </label>
-        <label class="item item-input" id="login-input2">
+        <label class="item item-input" id="password">
           <span class="input-label">Password</span>
-          <input type="password" placeholder="">
+          <input type="password" placeholder="" ng-model="data.password">
         </label>
       </ion-list>
       <div class="spacer" style="height: 40px;"></div>
-      <button id="login-button1" class="button button-stable  button-block">Log in</button>
+
+      <button id="login-button1" ng-click="login()" class="button button-stable  button-block">Log in</button>
       <a href="/#/signup" id="login-button2" class="button button-positive  button-block button-clear">Or create an account</a>
       <a href="#/tab/allEvents" id="login-button3" class="button button-positive  button-block button-clear">bypass</a>
       <a href="#/durTab/durEvent" id="login-button4" class="button button-calm  button-block button-clear">bypass dur event</a>

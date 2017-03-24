@@ -1,11 +1,11 @@
 <ion-view view-title="Events">
-  <ion-content class="padding">
+  <ion-content class="padding" overflow-scroll="false">
 
       <ion-list>
-          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="data in feed" type="item-text-wrap" href="#/tab/chats/{{data.id}}">
-              <img ng-src="{{data.title}}">
-              <h2>{{data.location}}</h2>
-              <p>{{data.startTime}}</p>
+          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="data in feed" type="item-text-wrap" href="#/tab/eventDetails/{{data._id}}">
+              <!--<img ng-src="{{data.image}}">-->
+              <h2>{{data.title}}</h2>
+              <p>{{data.info}}</p>
               <i class="icon ion-chevron-right icon-accessory"></i>
 
               <!--<ion-option-button class="button-assertive" ng-click="remove(chat)">
@@ -16,19 +16,19 @@
 
 
 
-              <ion-card>
-                      <!--<button class="button button-energized" ng-click="addImage()">
+              <!--<ion-card>
+                      <button class="button button-energized" ng-click="addImage()">
                           Add image
                       </button><br><br>
                       <ion-scroll>
                           <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="200px" />
-                      </ion-scroll>-->
+                      </ion-scroll>
 
 
                   <div ng-show="imgURI !== undefined"><img Src="{{imgURI}}" height="200px" style="justify-content: center"/></div>
                   <button class="button" ng-click="takePicture()">Take Picture</button>
              
-              </ion-card>
+              </ion-card>-->
  
 
   </ion-content>

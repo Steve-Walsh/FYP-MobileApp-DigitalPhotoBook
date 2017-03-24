@@ -4,173 +4,61 @@ angular.module('starter.controllers', [])
 //    url: 'http://34.252.51.64:8080/api/'
 //})
 
-.controller('AllEventsCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup) {
+.controller('AllEventsCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
 
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "mobiles/events").then(function (res) {
-            var alertPopup = $ionicPopup.alert({
-                title: 'data get success!',
-                //template: res.data.object.title
-            })
-            console.log('data ', res)
+        $http.get(ApiEndpoint.url + "api/mobiles/events").then(function (res) {
+            //var alertPopup = $ionicPopup.alert({
             $scope.feed = res.data;
         })
 
     });
 
-    $scope.takePicture = function () {
-        var options = {
-            quality: 75,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.CAMERA,
-            allowEdit: true,
-            encodingType: Camera.EncodingType.JPEG,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: true
-        };
 
-        $cordovaCamera.getPicture(options).then(function (imageData) {
-            $scope.imgURI = "data:image/jpeg;base64," + imageData;
-        }, function (err) {
-            console.log("error" + err)
-        });
-    }
 })
 
 
-    
+.controller('MyEventsCtrl', function ($scope, $cordovaCamera, $http, ApiEndpoint, $ionicPopup, $state) {
 
-.controller('MyEventsCtrl', function ($scope, Chats, $cordovaCamera, $http, ApiEndpoint, $ionicPopup) {
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url +"mobiles").then(function (res) {
-                var alertPopup = $ionicPopup.alert({
-                    title: 'data get success!',
-                    //template: res.data.object.title
-                })
+        $http.get(ApiEndpoint.url +"api/mobiles").then(function (res) {
             console.log('data ', res)
             $scope.feed = res.data;
         })
 
     });
-
-    $scope.chats = Chats.all();
-    $scope.remove = function (chat) {
-        Chats.remove(chat);
-    };
-    
     $scope.feed = null;
 
-    //$http.get(ApiEndpoint.url).then(function (data) {
-    //    var alertPopup = $ionicPopup.alert({
-    //        title: 'data get success!',
-    //        template: data.data.title
-    //    })
-    //    console.log('data ' , data)
-    //    $scope.feed = data.title;
-    //})
 }) 
 
-.controller('ChatDetailCtrl', function ($scope, $stateParams, Chats) {
-    $scope.chat = Chats.get($stateParams.chatId);
+.controller('EventDetailCtrl', function ($scope, $stateParams, Events, $http, ApiEndpoint, $timeout) {
+
+
+    $http.get(ApiEndpoint.url + 'api/events/event/' + $stateParams.eventId).then(function (res) {
+        console.log('data ', res.data.event)
+        $scope.event = res.data.event;
+    })
 })
 
-.controller('PicturesCtrl', function ($scope, Pictures, $http, ApiEndpoint, $ionicPopup) {
+.controller('PicturesCtrl', function ($scope, $http, ApiEndpoint, $ionicPopup, $state) {
     $scope.settings = {
         enableFriends: true
     };
+    
 
-    var userDetails = { email: "steve@email.com" , password : "password"};
-    //userDetails.email = 
-    //userDetails.password = "password"
     $scope.$on('$ionicView.enter', function (e) {
-        $http.post(ApiEndpoint.url + "mobiles/login", userDetails).then(function (res) {
-            var alertPopup = $ionicPopup.alert({
-                    
-                title: 'data get success!' + res.data.name,
-                    //template: res.data.object.title
-                    
-            })
-            console.log('data ', res)
+        $http.get(ApiEndpoint.url + "api/mobiles/pictures").then(function (res) {
             $scope.feed = res.data;
         })
 
     });
-    //console.log("in pic ctrl")
-    $scope.pictures = Pictures.all();
-    $scope.remove = function (picture) {
-        Pictures.remove(picture);
-    };
+
+   
 })
 
 
-.controller('TakePictureCtrl', function ($scope, $stateParams, $cordovaCamera) {
-  
-    $scope.takePicture = function () {
-        var options = {
-            quality: 75,
-            destinationType: Camera.DestinationType.DATA_URL,
-            sourceType: Camera.PictureSourceType.CAMERA,
-            allowEdit: true,
-            encodingType: Camera.EncodingType.JPEG,
-            targetWidth: 300,
-            targetHeight: 300,
-            popoverOptions: CameraPopoverOptions,
-            saveToPhotoAlbum: false
-        };
+.controller('TakePictureCtrl', function ($scope, $stateParams, $cordovaCamera, $state) {
 
-        $cordovaCamera.getPicture(options).then(function (imageData) {
-            $scope.imgURI = "data:image/jpeg;base64," + imageData;
-        }, function (err) {
-            // An error occured. Show a message to the user
-        });
-    }
-
-
-})
-
-
-.controller('AccountCtrl', function ($scope) {
-    $scope.settings = {
-        enableFriends: true
-    };
-})
-
-
-
-.controller('loginCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-
-.controller('signupCtrl', ['$scope', '$stateParams', // The following is the constructor function for this page's controller. See https://docs.angularjs.org/guide/controller
-// You can include any angular dependencies as parameters for this function
-// TIP: Access Route Parameters for your page via $stateParams.parameterName
-function ($scope, $stateParams) {
-
-
-}])
-
-
-.controller('DurPicturesCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup) {
-
-    $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "mobiles/pictures").then(function (res) {
-            var alertPopup = $ionicPopup.alert({
-                title: 'data get success!',
-                //template: res.data.object.title
-            })
-            console.log('data ', res)
-            $scope.feed = res.data;
-        })
-    });
     $scope.takePicture = function () {
         var options = {
             quality: 75,
@@ -188,12 +76,63 @@ function ($scope, $stateParams) {
             console.log("error" + err)
         });
     }
+
+
 })
 
-.controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup) {
+
+.controller('AccountCtrl', function ($scope, $state) {
+    $scope.settings = {
+        enableFriends: true
+    };
+})
+
+
+.controller('loginCtrl', function ($scope, $stateParams, $http, ApiEndpoint, $ionicPopup, $state, AuthService, $state) {
+    $scope.data = {};
+
+    $scope.login = function () {
+
+        AuthService.login($scope.data).then(function (msg) {
+             $state.go('tabs.allEvents');
+        }, function (errMsg) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'Login failed!',
+                template: errMsg
+            });
+        });
+
+        };
+
+
+})
+
+ .controller('signupCtrl', function ($scope, AuthService, $ionicPopup, $state) {
+     $scope.data = {};
+
+        $scope.signup = function () {
+            AuthService.register($scope.data).then(function (msg) {
+                $state.go('tab.allEvents');
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Register success!',
+                    template: msg
+                });
+            }, function (errMsg) {
+                var alertPopup = $ionicPopup.alert({
+                    title: 'Register failed!',
+                    template: errMsg
+                });
+            });
+        };
+    })
+
+
+.controller('DurPicturesCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
+
+    $scope.imgURI = null;
 
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "mobiles/events").then(function (res) {
+        $http.get(ApiEndpoint.url + "api/mobiles/pictures").then(function (res) {
             var alertPopup = $ionicPopup.alert({
                 title: 'data get success!',
                 //template: res.data.object.title
@@ -201,7 +140,6 @@ function ($scope, $stateParams) {
             console.log('data ', res)
             $scope.feed = res.data;
         })
-
     });
 
     $scope.takePicture = function () {
@@ -221,8 +159,54 @@ function ($scope, $stateParams) {
             console.log("error" + err)
         });
     }
+
+    $scope.uploadPicture = function () {
+
+
+    }
+})
+
+.controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
+
+    $scope.$on('$ionicView.enter', function (e) {
+        $http.get(ApiEndpoint.url + "api/mobiles/events").then(function (res) {
+            var alertPopup = $ionicPopup.alert({
+                title: 'data get success!',
+                //template: res.data.object.title
+            })
+            console.log('data ', res)
+            $scope.feed = res.data;
+        })
+
+    });
+
+
 })
 
 
 
 ;
+
+
+
+
+
+
+
+//$scope.takePicture = function () {
+//    var options = {
+//        quality: 75,
+//        destinationType: Camera.DestinationType.DATA_URL,
+//        sourceType: Camera.PictureSourceType.CAMERA,
+//        allowEdit: true,
+//        encodingType: Camera.EncodingType.JPEG,
+//        popoverOptions: CameraPopoverOptions,
+//        saveToPhotoAlbum: true
+//    };
+
+//    $cordovaCamera.getPicture(options).then(function (imageData) {
+//        $scope.imgURI = "data:image/jpeg;base64," + imageData;
+//    }, function (err) {
+//        console.log("error" + err)
+//    });
+//}
