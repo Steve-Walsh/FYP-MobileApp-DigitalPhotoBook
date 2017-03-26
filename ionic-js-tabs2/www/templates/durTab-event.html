@@ -1,26 +1,20 @@
-﻿<ion-view view-title="Current Event">
-    <ion-content class="padding" overflow-scroll="false">
-       
+﻿
+
+
+<ion-view view-title="{{feed.title}}">
+    <ion-content class="padding">
+        <img ng-src="{{feed.image}}" style="width: 64px; height: 64px"> 
         <p>
-          For help sending push notifications, join the <a href="https://apps.ionic.io/signup" target="_blank">Ionic Platform</a> and check out <a href="http://docs.ionic.io/docs/push-overview" target="_blank">Ionic Push</a>. We also have other services available.
-        </p>-->
-        <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="data in feed" type="item-text-wrap" href="#/tab/chats/{{data.id}}">
-                <img ng-src="{{data.title}}">
-                <h2>{{data.location}}</h2>
-                <p>{{data.startTime}}</p>
-                <i class="icon ion-chevron-right icon-accessory"></i>
+            {{feed.location}}
+            {{event.startTime}}   - {{feed.endTime}}
+        </p>
+        <p>
+            {{feed.title}}
+            {{feed.info}}
 
-                <!--<ion-option-button class="button-assertive" ng-click="remove(chat)">
-                    Delete
-                </ion-option-button>-->
-            </ion-item>
-        </ion-list>
+            <div ng-if="feed.attenders.length == 0"> No users</div><div ng-if="feed.attenders.length > 0"> {{feed.attenders.length}}</div>
+            <div ng-if="feed.pictures.length == 0"> No Pictures</div><div ng-if="feed.pictures.length > 0"> {{feed.pictures.length}}</div>
 
-
-
-
-
-
+        </p>
     </ion-content>
 </ion-view>

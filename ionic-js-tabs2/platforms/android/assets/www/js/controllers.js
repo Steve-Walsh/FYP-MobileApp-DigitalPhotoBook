@@ -18,10 +18,13 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('MyEventsCtrl', function ($scope, $cordovaCamera, $http, ApiEndpoint, $ionicPopup, $state) {
+.controller('MyEventsCtrl', function ($scope, $cordovaCamera, $http, ApiEndpoint, $ionicPopup, $state, AuthService) {
+
+    var loggedInUser = AuthService.getLoggedInUser()
+    console.log("logged in user is", loggedInUser.id)
 
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url +"api/mobiles").then(function (res) {
+        $http.get(ApiEndpoint.url + "api/events/myEvents/" + loggedInUser.id).then(function (res) {
             console.log('data ', res)
             $scope.feed = res.data;
         })
@@ -34,7 +37,7 @@ angular.module('starter.controllers', [])
 .controller('EventDetailCtrl', function ($scope, $stateParams, Events, $http, ApiEndpoint, $timeout) {
 
 
-    $http.get(ApiEndpoint.url + 'api/events/event/' + $stateParams.eventId).then(function (res) {
+    $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + $stateParams.eventId).then(function (res) {
         console.log('data ', res.data.event)
         $scope.event = res.data.event;
     })
@@ -48,6 +51,7 @@ angular.module('starter.controllers', [])
 
     $scope.$on('$ionicView.enter', function (e) {
         $http.get(ApiEndpoint.url + "api/mobiles/pictures").then(function (res) {
+            console.log(res.data)
             $scope.feed = res.data;
         })
 
@@ -81,9 +85,16 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('AccountCtrl', function ($scope, $state) {
+.controller('AccountCtrl', function ($scope, $state, AuthService) {
     $scope.settings = {
         enableFriends: true
+    };
+
+    $scope.logout = function () {
+        console.log("logout called")
+        AuthService.logout();
+        $state.go('login');
+
     };
 })
 
@@ -94,7 +105,7 @@ angular.module('starter.controllers', [])
     $scope.login = function () {
 
         AuthService.login($scope.data).then(function (msg) {
-             $state.go('tabs.allEvents');
+             $state.go('tab.allEvents');
         }, function (errMsg) {
             var alertPopup = $ionicPopup.alert({
                 title: 'Login failed!',
@@ -131,16 +142,13 @@ angular.module('starter.controllers', [])
 
     $scope.imgURI = null;
 
-    $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "api/mobiles/pictures").then(function (res) {
-            var alertPopup = $ionicPopup.alert({
-                title: 'data get success!',
-                //template: res.data.object.title
-            })
-            console.log('data ', res)
-            $scope.feed = res.data;
-        })
-    });
+    //$scope.$on('$ionicView.enter', function (e) {
+    //    $http.get(ApiEndpoint.url + "api/mobiles/pictures").then(function (res) {
+    //        console.log('data ', res)
+    //        $scope.feed = res.data;
+    //    })
+    //});
+
 
     $scope.takePicture = function () {
         var options = {
@@ -169,13 +177,14 @@ angular.module('starter.controllers', [])
 .controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
 
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "api/mobiles/events").then(function (res) {
-            var alertPopup = $ionicPopup.alert({
-                title: 'data get success!',
-                //template: res.data.object.title
-            })
-            console.log('data ', res)
-            $scope.feed = res.data;
+        //$http.get(ApiEndpoint.url + "api/event/eventDetails/58cd4771d8bd330e754a6a4b").then(function (res) {
+        //    console.log('data ', res)
+        //    $scope.feed = res.data;
+        //})
+
+        $http.get(ApiEndpoint.url + 'api/events/eventDetails/58d7c3e4e8736d0c1a4cc37a').then(function (res) {
+            console.log('data ', res.data.event)
+            $scope.feed = res.data.event;
         })
 
     });

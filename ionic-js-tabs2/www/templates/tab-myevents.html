@@ -1,8 +1,8 @@
 <ion-view view-title="My Events">
-  <ion-content overflow-scroll="false">
+  <ion-content class="padding" overflow-scroll="false">
     <ion-list>
       <ion-list>
-          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="data in feed" type="item-text-wrap" href="#/tab/chats/{{data._id}}">
+          <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="data in feed" type="item-text-wrap" href="#/tab/myEventDetails/{{data._id}}">
              <!-- <img ng-src="{{chat.face}}">-->
               <h2>{{data.title}}</h2>
               <p>{{data.info}}</p>
