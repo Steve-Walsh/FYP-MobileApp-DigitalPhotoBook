@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ui.router', 'ionic.cloud'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ui.router'])
 
  //.constant('ApiEndpoint', {
  //    url: 'http://34.253.80.13:8080/'
@@ -13,26 +13,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 
 
-.config(function ($stateProvider, $urlRouterProvider, $ionicCloudProvider) {
+.config(function ($stateProvider, $urlRouterProvider) {
     var loggined = null
-
-    $ionicCloudProvider.init({
-        "core": {
-            "app_id": "461d6a75"
-        },
-        "push": {
-            "sender_id": "288476716569",
-            "pluginConfig": {
-                "ios": {
-                    "badge": true,
-                    "sound": true
-                },
-                "android": {
-                    "iconColor": "#343434"
-                }
-            }
-        }
-    });
 
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router

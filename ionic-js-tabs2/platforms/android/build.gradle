@@ -88,7 +88,6 @@ ext {
 }
 
 // PLUGIN GRADLE EXTENSIONS START
-apply from: "phonegap-plugin-push/myapp325817-push.gradle"
 // PLUGIN GRADLE EXTENSIONS END
 
 def hasBuildExtras = file('build-extras.gradle').exists()
@@ -252,9 +251,6 @@ dependencies {
     releaseCompile(project(path: "CordovaLib", configuration: "release"))
     compile "com.android.support:support-v4:24.1.1+"
     compile "com.microsoft.aad:adal:1.10.0"
-    compile "com.android.support:support-v13:23+"
-    compile "com.google.android.gms:play-services-gcm:10.2+"
-    compile "me.leolin:ShortcutBadger:1.1.12@aar"
     // SUB-PROJECT DEPENDENCIES END
 }
 

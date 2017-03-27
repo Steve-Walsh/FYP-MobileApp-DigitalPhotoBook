@@ -1,16 +1,16 @@
 {
   "name": "io.cordova.myapp325817",
-  "app_id": "461d6a75",
-  "proxies": [
+  "app_id": "",
+   "proxies": [
     {
       "path": "/v1",
       "proxyUrl": "http://34.251.128.133:8080/api/events"
     }
   ],
-  "gulpDependantTasks": [
+  "gulpDependantTasks" : [
     "sass"
-  ],
-  "gulpStartupTasks": [
+  ],  
+   "gulpStartupTasks": [        
     "watch"
   ]
 }
