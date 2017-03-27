@@ -7,19 +7,13 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-camera": {
+        "cordova-plugin-device": {
             "PACKAGE_NAME": "io.cordova.myapp325817"
         },
         "cordova-plugin-console": {
             "PACKAGE_NAME": "io.cordova.myapp325817"
         },
-        "cordova-plugin-device": {
-            "PACKAGE_NAME": "io.cordova.myapp325817"
-        },
-        "cordova-plugin-dialogs": {
-            "PACKAGE_NAME": "io.cordova.myapp325817"
-        },
-        "cordova-plugin-ms-adal": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "io.cordova.myapp325817"
         },
         "cordova-plugin-splashscreen": {
@@ -28,10 +22,16 @@
         "cordova-plugin-statusbar": {
             "PACKAGE_NAME": "io.cordova.myapp325817"
         },
-        "cordova-plugin-whitelist": {
+        "ionic-plugin-keyboard": {
             "PACKAGE_NAME": "io.cordova.myapp325817"
         },
-        "ionic-plugin-keyboard": {
+        "cordova-plugin-camera": {
+            "PACKAGE_NAME": "io.cordova.myapp325817"
+        },
+        "cordova-plugin-ms-adal": {
+            "PACKAGE_NAME": "io.cordova.myapp325817"
+        },
+        "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "io.cordova.myapp325817"
         }
     },

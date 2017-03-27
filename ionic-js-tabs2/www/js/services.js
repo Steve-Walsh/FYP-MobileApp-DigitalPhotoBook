@@ -12,20 +12,6 @@ angular.module('starter.services', [])
             useCredentials(token);
         }
     }
-
-    var currentUser = function () {
-        if (isAuthenticated) {
-            var token = window.localStorage['photoApp-token'];
-            var payload = token.split('.')[1];
-            payload = window.atob(payload);
-            payload = JSON.parse(payload);
-            return {
-                email: payload.email,
-                name: payload.name,
-                id: payload._id
-            };
-        }
-    };
  
     function storeUserCredentials(token) {
         window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
@@ -88,9 +74,6 @@ angular.module('starter.services', [])
         isAuthenticated: function () {
             return isAuthenticated;
         },
-        getLoggedInUser: function () {
-            return currentUser();
-        }
     };
 })
  

@@ -1,5 +1,5 @@
 ﻿<ion-view view-title="Current Pictures">
-    <ion-content class="padding" overflow-scroll="false">
+    <ion-content class="has-footer" overflow-scroll="false">
         <ion-list>
             <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="picture in pictures" type="item-text-wrap" href="#/tab/pictures/{{picture.id}}">
                 <img ng-src="{{picture.face}}">
@@ -18,14 +18,19 @@
 
 
         <div class="text-center">
-            <div ng-show="imgURI !== null"><img Src="{{imgURI}}" height="200px" style="justify-content: center" /></div>
-            <!--<button class="button" ng-click="takePicture()">Take Picture</button>-->
+            <div ng-show="imgURI !== undefined"><img Src="{{imgURI}}" height="200px" style="justify-content: center" /></div>
+            <button class="button" ng-click="takePicture()">Take Picture</button>
         </div>
         
-        <div ng-show="imgURI == null" class=" text-center"><button class="button button-full button-calm text-center" ng-click="takePicture()">Take Picture</button></div>
-        <!--<div ng-show="imgURI !== null"><button class="button button-full button-calm" ng-click="uploadPicture()">upload</button></div>-->
+
 
     </ion-content>
+
+    <ion-footer-bar>
+        <div class="text-center">
+            <button class="button title" ng-click="takePicture()">Take Picture</button>
+        </div>
+    </ion-footer-bar>
 
 
 </ion-view>

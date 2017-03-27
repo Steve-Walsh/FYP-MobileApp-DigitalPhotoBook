@@ -7,9 +7,9 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ui.router'])
 
- //.constant('ApiEndpoint', {
- //    url: 'http://34.253.80.13:8080/'
- //})
+ .constant('ApiEndpoint', {
+     url: 'http://34.253.57.116:8080/'
+ })
 
 
 
@@ -85,16 +85,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
       }
     })
-        .state('tab.myevent-details', {
-            url: '/myEventDetails/:eventId',
-            views: {
-                'tab-myEvents': {
-                    templateUrl: 'templates/event-details.html',
-                    controller: 'EventDetailCtrl'
-                }
-            }
-        })
-    
+
   .state('tab.pictures', {
             url: '/pictures',
             views: {
@@ -166,6 +157,17 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }   
         }
     });
+
+    //$rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
+    //    if (!AuthService.isAuthenticated()) {
+    //        console.log(next.name);
+    //        if (next.name !== 'login' && next.name !== 'signup') {
+    //            event.preventDefault();
+    //            //$state.go('tab.account');
+    //        }
+    //    }
+    //});
+
 
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
