@@ -1,10 +1,15 @@
-angular.module('starter.controllers', [])
+angular.module('starter.controllers', ['ionic.cloud'])
 
 //.constant('apiendpoint', {
 //    url: 'http://34.252.51.64:8080/api/'
 //})
 
 .controller('AllEventsCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
+
+    $scope.$on('cloud:push:notification', function (event, data) {
+        var msg = data.message;
+        alert(msg.title + ': ' + msg.text);
+    });
 
     $scope.$on('$ionicView.enter', function (e) {
         $http.get(ApiEndpoint.url + "api/mobiles/events").then(function (res) {
@@ -85,7 +90,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('AccountCtrl', function ($scope, $state, AuthService) {
+.controller('AccountCtrl', function ($scope, $state, AuthService, $ionicPush) {
     $scope.settings = {
         enableFriends: true
     };
@@ -101,6 +106,7 @@ angular.module('starter.controllers', [])
 
 .controller('loginCtrl', function ($scope, $stateParams, $http, ApiEndpoint, $ionicPopup, $state, AuthService, $state) {
     $scope.data = {};
+
 
     $scope.login = function () {
 

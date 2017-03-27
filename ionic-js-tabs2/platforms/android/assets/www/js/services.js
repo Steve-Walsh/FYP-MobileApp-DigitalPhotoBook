@@ -1,10 +1,13 @@
 angular.module('starter.services', [])
 
 
-.service('AuthService', function ($q, $http, ApiEndpoint) {
+.service('AuthService', function ($q, $http, ApiEndpoint, $ionicPush) {
     var LOCAL_TOKEN_KEY = 'photoApp-token';
     var isAuthenticated = false;
     var authToken;
+
+
+   
  
     function loadUserCredentials() {
         var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
@@ -68,6 +71,12 @@ angular.module('starter.services', [])
                     
                     storeUserCredentials(result.data.token);
                     resolve(result.data.msg);
+
+                    $ionicPush.register().then(function (t) {
+                        return $ionicPush.saveToken(t);
+                    }).then(function (t) {
+                        console.log('Token saved:', t.token);
+                    });
                 } else {
                     reject(result.data.msg);
                 }
@@ -145,7 +154,7 @@ angular.module('starter.services', [])
 
 
 
-;
+
 
 
 
