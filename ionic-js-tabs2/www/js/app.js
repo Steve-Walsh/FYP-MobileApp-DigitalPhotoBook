@@ -7,143 +7,170 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ui.router'])
 
- .constant('ApiEndpoint', {
-     url: 'http://34.253.57.116:8080/'
- })
+ //.constant('ApiEndpoint', {
+ //    url: 'http://34.253.80.13:8080/'
+ //})
 
 
 
 .config(function ($stateProvider, $urlRouterProvider) {
     var loggined = null
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
+    //$ionicCloudProvider.init({
+    //    "core": {
+    //        "app_id": "461d6a75"
+    //    },
+    //    "push": {
+    //        "sender_id": "288476716569",
+    //        "pluginConfig": {
+    //            "ios": {
+    //                "badge": true,
+    //                "sound": true
+    //            },
+    //            "android": {
+    //                "iconColor": "#343434"
+    //            }
+    //        }
+    //    }
+    //});
 
-  // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-    })
+    // Ionic uses AngularUI Router which uses the concept of states
+    // Learn more here: https://github.com/angular-ui/ui-router
+    // Set up the various states which the app can be in.
+    // Each state's controller can be found in controllers.js
+    $stateProvider
 
-    .state('durTab', {
-     url: '/durTab',
-     abstract: true,
-      templateUrl: 'templates/durTab.html'
-    })
+    // setup an abstract state for the tabs directive
+      .state('tab', {
+          url: '/tab',
+          abstract: true,
+          templateUrl: 'templates/tabs.html'
+      })
+
+      .state('durTab', {
+          url: '/durTab',
+          abstract: true,
+          templateUrl: 'templates/durTab.html'
+      })
 
 
-  .state('durTab.durEvent', {
-      url: '/durEvent',
-      views: {
-          'durTab-event': {
-              templateUrl: 'templates/durTab-event.html',
-              controller: 'DurEventCtrl'
-          }
-      }
-  })
-
-  .state('durTab.durPictures', {
-      url: '/durPictures',
-            views: {
-                'durTab-pictures': {
-                    templateUrl: 'templates/durTab-pictures.html',
-                    controller: 'DurPicturesCtrl'
-                }
+    .state('durTab.durEvent', {
+        url: '/durEvent',
+        views: {
+            'durTab-event': {
+                templateUrl: 'templates/durTab-event.html',
+                controller: 'DurEventCtrl'
             }
-  })
-
-
-  .state('tab.allEvents', {
-      url: '/allEvents',
-    views: {
-      'tab-allEvents': {
-        templateUrl: 'templates/tab-events.html',
-        controller: 'AllEventsCtrl'
-      }
-    }
-  })
-
-  .state('tab.myEvents', {
-      url: '/myEvents',
-      views: {
-          'tab-myEvents': {
-          templateUrl: 'templates/tab-myevents.html',
-          controller: 'MyEventsCtrl'
         }
-      }
-    })
-    .state('tab.event-details', {
-        url: '/eventDetails/:eventId',
-      views: {
-          'tab-allEvents': {
-          templateUrl: 'templates/event-details.html',
-          controller: 'EventDetailCtrl'
-        }
-      }
     })
 
-  .state('tab.pictures', {
-            url: '/pictures',
-            views: {
-                'tab-pictures': {
-                    templateUrl: 'templates/tab-pictures.html',
-                    controller: 'PicturesCtrl'
-                }
+    .state('durTab.durPictures', {
+        url: '/durPictures',
+        views: {
+            'durTab-pictures': {
+                templateUrl: 'templates/durTab-pictures.html',
+                controller: 'DurPicturesCtrl'
             }
-  })
+        }
+    })
 
-  .state('tab.picture-detail', {
-      url: '/pictures/:pictureId',
-         views: {
-             'tab-pictures': {
-                 templateUrl: 'templates/picture-detail.html',
-                 controller: 'PictureDetailCtrl'
-             }
-         }
-  })
 
-  .state('tab.takePicture', {
-      url: '/takePicture',
-      views: {
-          'takePicture': {
-              templateUrl: 'templates/takePicture.html',
-              controller: 'TakePictureCtrl'
+    .state('tab.allEvents', {
+        url: '/allEvents',
+        views: {
+            'tab-allEvents': {
+                templateUrl: 'templates/tab-events.html',
+                controller: 'AllEventsCtrl'
+            }
+        }
+    })
+
+    .state('tab.myEvents', {
+        url: '/myEvents',
+        views: {
+            'tab-myEvents': {
+                templateUrl: 'templates/tab-myevents.html',
+                controller: 'MyEventsCtrl'
+            }
+        }
+    })
+      .state('tab.event-details', {
+          url: '/eventDetails/:eventId',
+          views: {
+              'tab-allEvents': {
+                  templateUrl: 'templates/event-details.html',
+                  controller: 'EventDetailCtrl'
+              }
           }
-      }
-  })
+      })
+          .state('tab.myevent-details', {
+              url: '/myEventDetails/:eventId',
+              views: {
+                  'tab-myEvents': {
+                      templateUrl: 'templates/event-details.html',
+                      controller: 'EventDetailCtrl'
+                  }
+              }
+          })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  })
+    .state('tab.pictures', {
+        url: '/pictures',
+        views: {
+            'tab-pictures': {
+                templateUrl: 'templates/tab-pictures.html',
+                controller: 'PicturesCtrl'
+            }
+        }
+    })
 
-  .state('login', {
-      url: '/login',
-         templateUrl: 'templates/login.html',
-         controller: 'loginCtrl'
-     })
+    .state('tab.picture-detail', {
+        url: '/pictures/:pictureId',
+        views: {
+            'tab-pictures': {
+                templateUrl: 'templates/picture-detail.html',
+                controller: 'PictureDetailCtrl'
+            }
+        }
+    })
 
-  .state('signup', {
-      url: '/signup',
-      templateUrl: 'templates/signup.html',
-      controller: 'signupCtrl'
-  });
+    .state('tab.takePicture', {
+        url: '/takePicture',
+        views: {
+            'takePicture': {
+                templateUrl: 'templates/takePicture.html',
+                controller: 'TakePictureCtrl'
+            }
+        }
+    })
+
+    .state('tab.account', {
+        url: '/account',
+        views: {
+            'tab-account': {
+                templateUrl: 'templates/tab-account.html',
+                controller: 'AccountCtrl'
+            }
+        }
+    })
+
+    .state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl'
+    })
+
+    .state('signup', {
+        url: '/signup',
+        templateUrl: 'templates/signup.html',
+        controller: 'signupCtrl'
+    });
 
     // if none of the above states are matched, use this as the fallback
-  //if (loggined === null) {
-  //    $urlRouterProvider.otherwise('/login');
-  //} else {
-  $urlRouterProvider.otherwise('/tab/myEvents');
-  //}
+    //if (loggined === null) {
+    //    $urlRouterProvider.otherwise('/login');
+    //} else {
+    $urlRouterProvider.otherwise('/tab/myEvents');
+    //}
 
 })
 .run(function ($ionicPlatform, $rootScope, $state, AuthService, AUTH_EVENTS) {
@@ -154,20 +181,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             if (next.name !== 'login' && next.name !== 'signup') {
                 event.preventDefault();
                 $state.go('login');
-            }   
+            }
         }
     });
-
-    //$rootScope.$on('$stateChangeStart', function (event, next, nextParams, fromState) {
-    //    if (!AuthService.isAuthenticated()) {
-    //        console.log(next.name);
-    //        if (next.name !== 'login' && next.name !== 'signup') {
-    //            event.preventDefault();
-    //            //$state.go('tab.account');
-    //        }
-    //    }
-    //});
-
 
     $ionicPlatform.ready(function () {
         // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard

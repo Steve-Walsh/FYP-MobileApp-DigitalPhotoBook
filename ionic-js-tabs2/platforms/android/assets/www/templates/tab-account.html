@@ -1,9 +1,15 @@
 <ion-view view-title="Account">
-  <ion-content overflow-scroll="false">
-    <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
-    </ion-list>
-  </ion-content>
+    <ion-content overflow-scroll="false" class="padding">
+        <ion-list>
+            <ion-toggle ng-model="settings.enableFriends">
+                Enable Friends
+            </ion-toggle>
+            <button class="button button-full button-assertive" ng-click="logout()">
+                Logout
+            </button>
+
+            <a href="#/durTab/durEvent" id="login-button4" class="button button-calm  button-block">bypass dur event</a>
+
+        </ion-list>
+    </ion-content>
 </ion-view>

@@ -5,36 +5,53 @@ angular.module('starter.services', [])
     var LOCAL_TOKEN_KEY = 'photoApp-token';
     var isAuthenticated = false;
     var authToken;
- 
+
+
+
+
     function loadUserCredentials() {
         var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
         if (token) {
             useCredentials(token);
         }
     }
- 
+
+    var currentUser = function () {
+        if (isAuthenticated) {
+            var token = window.localStorage['photoApp-token'];
+            var payload = token.split('.')[1];
+            payload = window.atob(payload);
+            payload = JSON.parse(payload);
+            return {
+                email: payload.email,
+                name: payload.name,
+                id: payload._id
+            };
+        }
+    };
+
     function storeUserCredentials(token) {
         window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
         useCredentials(token);
     }
- 
+
     function useCredentials(token) {
         isAuthenticated = true;
         authToken = token;
- 
+
         // Set the token as header for your requests!
         $http.defaults.headers.common.Authorization = authToken;
     }
- 
+
     function destroyUserCredentials() {
         authToken = undefined;
         isAuthenticated = false;
         $http.defaults.headers.common.Authorization = undefined;
         window.localStorage.removeItem(LOCAL_TOKEN_KEY);
     }
- 
-    var register = function(user) {
-        return $q(function(resolve, reject) {
+
+    var register = function (user) {
+        return $q(function (resolve, reject) {
             $http.post(ApiEndpoint.url + 'api/users/registerNewUser', user).then(function (result) {
                 if (result.data.success) {
                     resolve(result.data.msg);
@@ -44,29 +61,38 @@ angular.module('starter.services', [])
             });
         });
     };
- 
+
     var login = function (user) {
         console.log(user)
-        return $q(function(resolve, reject) {
+        return $q(function (resolve, reject) {
             $http.post(ApiEndpoint.url + 'authenticate', user).then(function (result) {
                 console.log("result is : ", result);
                 if (result.data.success) {
-                    
+
                     storeUserCredentials(result.data.token);
                     resolve(result.data.msg);
+
+                    //$ionicPush.register().then(function (t) {
+                    //    return $ionicPush.saveToken(t);
+                    //}).then(function (t) {
+                    //    console.log('Token saved:', t.token);
+                    //});
+
+
+
                 } else {
                     reject(result.data.msg);
                 }
             });
         });
     };
- 
-    var logout = function() {
+
+    var logout = function () {
         destroyUserCredentials();
     };
- 
+
     loadUserCredentials();
- 
+
     return {
         login: login,
         register: register,
@@ -74,9 +100,12 @@ angular.module('starter.services', [])
         isAuthenticated: function () {
             return isAuthenticated;
         },
+        getLoggedInUser: function () {
+            return currentUser();
+        }
     };
 })
- 
+
 .factory('AuthInterceptor', function ($rootScope, $q, AUTH_EVENTS) {
     return {
         responseError: function (response) {
@@ -87,7 +116,7 @@ angular.module('starter.services', [])
         }
     };
 })
- 
+
 .config(function ($httpProvider) {
     $httpProvider.interceptors.push('AuthInterceptor');
 })
@@ -128,7 +157,6 @@ angular.module('starter.services', [])
 
 
 
-;
 
 
 

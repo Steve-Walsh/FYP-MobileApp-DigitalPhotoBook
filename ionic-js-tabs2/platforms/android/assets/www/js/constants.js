@@ -5,5 +5,5 @@
 })
 
 .constant('ApiEndpoint', {
-    url: 'http://34.253.57.116:8080/'
+    url: 'http://34.251.251.67:8080/'
 })
