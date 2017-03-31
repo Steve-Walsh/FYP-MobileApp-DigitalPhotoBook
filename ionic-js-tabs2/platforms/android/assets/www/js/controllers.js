@@ -175,9 +175,19 @@ angular.module('starter.controllers', [])
     }
 
     $scope.uploadPicture = function () {
+        var picture = {}
+        picture.name = "Steve"
+        picture.image = $scope.imgURI
+        console.log("upload picture called", picture)
 
+        $http.post(ApiEndpoint.url + 'api/pictures/', picture).then(function (result) {
+            console.log("result is : ", result);
+        });
 
     }
+
+
+ 
 })
 
 .controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
