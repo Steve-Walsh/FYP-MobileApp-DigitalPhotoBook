@@ -316,6 +316,14 @@ module.exports = [
         "clobbers": [
             "window.FileTransfer"
         ]
+    },
+    {
+        "id": "phonegap-plugin-push.PushNotification",
+        "file": "plugins/phonegap-plugin-push/www/push.js",
+        "pluginId": "phonegap-plugin-push",
+        "clobbers": [
+            "PushNotification"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -332,7 +340,8 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.2.2",
     "ionic-plugin-keyboard": "2.2.1",
     "cordova-plugin-file": "4.3.2",
-    "cordova-plugin-file-transfer": "1.6.2"
+    "cordova-plugin-file-transfer": "1.6.2",
+    "phonegap-plugin-push": "1.10.0"
 };
 // BOTTOM OF METADATA
 });

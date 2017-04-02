@@ -36,6 +36,10 @@
         },
         "cordova-plugin-file-transfer": {
             "PACKAGE_NAME": "io.cordova.myapp325817"
+        },
+        "phonegap-plugin-push": {
+            "SENDER_ID": "288476716569",
+            "PACKAGE_NAME": "io.cordova.myapp325817"
         }
     },
     "dependent_plugins": {

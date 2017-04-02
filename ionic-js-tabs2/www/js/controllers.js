@@ -15,6 +15,7 @@ angular.module('starter.controllers', [])
         $http.get(ApiEndpoint.url + "api/mobiles/events").then(function (res) {
             //var alertPopup = $ionicPopup.alert({
             $scope.feed = res.data;
+            $scope.feed.eventImage = "beer.png"
         })
 
     });
@@ -32,6 +33,7 @@ angular.module('starter.controllers', [])
         $http.get(ApiEndpoint.url + "api/events/myEvents/" + loggedInUser.id).then(function (res) {
             console.log('data ', res)
             $scope.feed = res.data;
+            $scope.feed.eventImage = "beer.png"
         })
 
     });
@@ -45,6 +47,7 @@ angular.module('starter.controllers', [])
     $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + $stateParams.eventId).then(function (res) {
         console.log('data ', res.data.event)
         $scope.event = res.data.event;
+        $scope.event.eventImage = "beer.png"
     })
 })
 
@@ -217,6 +220,7 @@ angular.module('starter.controllers', [])
         $http.get(ApiEndpoint.url + 'api/events/eventDetails/58d7c3e4e8736d0c1a4cc37a').then(function (res) {
             console.log('data ', res.data.event)
             $scope.feed = res.data.event;
+            $scope.feed.eventImage = "beer.png"
         })
 
     });

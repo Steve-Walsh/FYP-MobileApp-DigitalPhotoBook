@@ -188,6 +188,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         if (window.StatusBar) {
             StatusBar.styleDefault();
         }
+
+        var push = new Ionic.Push({
+            "debug": true
+        });
+
+        push.register(function (token) {
+            console.log("My Device token:", token.token);
+            push.saveToken(token);  // persist the token in the Ionic Platform
+        });
     });
 
 
