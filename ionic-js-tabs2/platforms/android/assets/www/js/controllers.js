@@ -144,16 +144,13 @@ angular.module('starter.controllers', [])
  })
 
 
-.controller('DurPicturesCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
+.controller('DurPicturesCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state, $cordovaFileTransfer) {
 
-    $scope.imgURI = null;
+    $scope.$on('$ionicView.enter', function (e) {
+        $scope.imgURI = null;
+        $scope.base64Img = null;
 
-    //$scope.$on('$ionicView.enter', function (e) {
-    //    $http.get(ApiEndpoint.url + "api/mobiles/pictures").then(function (res) {
-    //        console.log('data ', res)
-    //        $scope.feed = res.data;
-    //    })
-    //});
+    });
 
 
     $scope.takePicture = function () {
@@ -168,6 +165,7 @@ angular.module('starter.controllers', [])
         };
 
         $cordovaCamera.getPicture(options).then(function (imageData) {
+            $scope.base64Img = imageData;
             $scope.imgURI = "data:image/jpeg;base64," + imageData;
         }, function (err) {
             console.log("error" + err)
@@ -175,17 +173,39 @@ angular.module('starter.controllers', [])
     }
 
     $scope.uploadPicture = function () {
-        var picture = {}
-        picture.name = "Steve"
-        picture.image = $scope.imgURI
-        console.log("upload picture called", picture)
 
-        $http.post(ApiEndpoint.url + 'api/pictures/', picture).then(function (result) {
-            console.log("result is : ", result);
-        });
+        var fileURL = $scope.imgURI;
+        var ft = new FileTransfer();
 
+        function win(r) {
+            console.log("Code = " + r.responseCode);
+            console.log("Response = " + r.response);
+            console.log("Sent = " + r.bytesSent);
+        }
+        function fail(error) {
+            alert("An error has occurred: Code = " + error.code);
+            console.log("upload error source " + error.source);
+            console.log("upload error target " + error.target);
+        }
+        var uri = encodeURI(ApiEndpoint.url + 'api/photo/');
+        var options = new FileUploadOptions();
+        options.fileKey = "userPhoto";
+        options.fileName = "58d7c3e4e8736d0c1a4cc37a"
+        options.mimeType = "image/jpeg";
+
+        var headers ={'token' : $http.defaults.headers.common.Authorization}
+        options.headers = headers
+
+        
+        ft.onprogress = function (progressEvent) {
+            if (progressEvent.lengthComputable) {
+                loadingStatus.setPercentage(progressEvent.loaded / progressEvent.total);
+            } else {
+                loadingStatus.increment();
+            }
+        };
+        ft.upload(fileURL, uri, win, fail, options);
     }
-
 
  
 })
@@ -193,10 +213,6 @@ angular.module('starter.controllers', [])
 .controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
 
     $scope.$on('$ionicView.enter', function (e) {
-        //$http.get(ApiEndpoint.url + "api/event/eventDetails/58cd4771d8bd330e754a6a4b").then(function (res) {
-        //    console.log('data ', res)
-        //    $scope.feed = res.data;
-        //})
 
         $http.get(ApiEndpoint.url + 'api/events/eventDetails/58d7c3e4e8736d0c1a4cc37a').then(function (res) {
             console.log('data ', res.data.event)
@@ -206,32 +222,9 @@ angular.module('starter.controllers', [])
     });
 
 
-})
-
-
-
-;
+});
 
 
 
 
 
-
-
-//$scope.takePicture = function () {
-//    var options = {
-//        quality: 75,
-//        destinationType: Camera.DestinationType.DATA_URL,
-//        sourceType: Camera.PictureSourceType.CAMERA,
-//        allowEdit: true,
-//        encodingType: Camera.EncodingType.JPEG,
-//        popoverOptions: CameraPopoverOptions,
-//        saveToPhotoAlbum: true
-//    };
-
-//    $cordovaCamera.getPicture(options).then(function (imageData) {
-//        $scope.imgURI = "data:image/jpeg;base64," + imageData;
-//    }, function (err) {
-//        console.log("error" + err)
-//    });
-//}

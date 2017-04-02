@@ -52,8 +52,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
           abstract: true,
           templateUrl: 'templates/durTab.html'
       })
-
-
     .state('durTab.durEvent', {
         url: '/durEvent',
         views: {
@@ -63,7 +61,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
     })
-
     .state('durTab.durPictures', {
         url: '/durPictures',
         views: {
@@ -73,8 +70,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
     })
-
-
     .state('tab.allEvents', {
         url: '/allEvents',
         views: {
@@ -84,7 +79,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
     })
-
     .state('tab.myEvents', {
         url: '/myEvents',
         views: {
@@ -186,15 +180,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     });
 
     $ionicPlatform.ready(function () {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
         if (cordova.platformId === "ios" && window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
             cordova.plugins.Keyboard.disableScroll(true);
 
         }
         if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
             StatusBar.styleDefault();
         }
     });
