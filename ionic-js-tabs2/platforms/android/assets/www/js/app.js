@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ui.router'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ui.router', 'ionic.cloud'])
 
  //.constant('ApiEndpoint', {
  //    url: 'http://34.253.80.13:8080/'
@@ -13,26 +13,27 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
 
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider, $ionicCloudProvider) {
     var loggined = null
 
-    //$ionicCloudProvider.init({
-    //    "core": {
-    //        "app_id": "461d6a75"
-    //    },
-    //    "push": {
-    //        "sender_id": "288476716569",
-    //        "pluginConfig": {
-    //            "ios": {
-    //                "badge": true,
-    //                "sound": true
-    //            },
-    //            "android": {
-    //                "iconColor": "#343434"
-    //            }
-    //        }
-    //    }
-    //});
+    $ionicCloudProvider.init({
+        "core": {
+            "app_id": "461d6a75"
+        },
+        "push": {
+            "sender_id": "288476716569",
+            "pluginConfig": {
+                "ios": {
+                    "badge": true,
+                    "sound": true
+                },
+                "android": {
+                    "iconColor": "#343434"
+                }
+            }
+        }
+
+    });
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -179,6 +180,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
     });
 
+    //$rootScope.$on('cloud:push:notification', function (event, data) {
+    //    var msg = data.message;
+    //    alert(msg.title + ': ' + msg.text);
+    //});
     $ionicPlatform.ready(function () {
         if (cordova.platformId === "ios" && window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
             cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -189,15 +194,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             StatusBar.styleDefault();
         }
 
-        var push = new Ionic.Push({
-            "debug": true
-        });
-
-        push.register(function (token) {
-            console.log("My Device token:", token.token);
-            push.saveToken(token);  // persist the token in the Ionic Platform
-        });
     });
-
-
+    $rootScope.$on('cloud:push:notification', function (event, data) {
+        var msg = data.message;
+        alert(msg.title + ': ' + msg.text);
+    });
 });

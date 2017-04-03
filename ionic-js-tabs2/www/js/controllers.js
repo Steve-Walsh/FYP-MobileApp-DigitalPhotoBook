@@ -6,10 +6,7 @@ angular.module('starter.controllers', [])
 
 .controller('AllEventsCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
 
-    //$scope.$on('cloud:push:notification', function (event, data) {
-    //    var msg = data.message;
-    //    alert(msg.title + ': ' + msg.text);
-    //});
+
 
     $scope.$on('$ionicView.enter', function (e) {
         $http.get(ApiEndpoint.url + "api/mobiles/events").then(function (res) {
@@ -90,10 +87,8 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('AccountCtrl', function ($scope, $state, AuthService) {
-    $scope.settings = {
-        enableFriends: true
-    };
+.controller('AccountCtrl', function ($scope, $state, AuthService, $rootScope, $ionicUser, $ionicPush) {
+
 
     $scope.logout = function () {
         console.log("logout called")
