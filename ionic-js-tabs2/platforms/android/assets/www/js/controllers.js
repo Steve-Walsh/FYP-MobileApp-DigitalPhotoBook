@@ -15,7 +15,6 @@ angular.module('starter.controllers', [])
         $http.get(ApiEndpoint.url + "api/mobiles/events").then(function (res) {
             //var alertPopup = $ionicPopup.alert({
             $scope.feed = res.data;
-            $scope.feed.eventImage = "beer.png"
         })
 
     });
@@ -33,7 +32,6 @@ angular.module('starter.controllers', [])
         $http.get(ApiEndpoint.url + "api/events/myEvents/" + loggedInUser.id).then(function (res) {
             console.log('data ', res)
             $scope.feed = res.data;
-            $scope.feed.eventImage = "beer.png"
         })
 
     });
@@ -47,7 +45,6 @@ angular.module('starter.controllers', [])
     $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + $stateParams.eventId).then(function (res) {
         console.log('data ', res.data.event)
         $scope.event = res.data.event;
-        $scope.event.eventImage = "beer.png"
     })
 })
 
@@ -193,7 +190,7 @@ angular.module('starter.controllers', [])
         var uri = encodeURI(ApiEndpoint.url + 'api/photo/');
         var options = new FileUploadOptions();
         options.fileKey = "userPhoto";
-        options.fileName = "58d7c3e4e8736d0c1a4cc37a"
+        options.fileName = "58e256504e27e734f671c2b4"
         options.mimeType = "image/jpeg";
 
         var headers ={'token' : $http.defaults.headers.common.Authorization}
@@ -217,10 +214,9 @@ angular.module('starter.controllers', [])
 
     $scope.$on('$ionicView.enter', function (e) {
 
-        $http.get(ApiEndpoint.url + 'api/events/eventDetails/58d7c3e4e8736d0c1a4cc37a').then(function (res) {
+        $http.get(ApiEndpoint.url + 'api/events/eventDetails/58e256504e27e734f671c2b4').then(function (res) {
             console.log('data ', res.data.event)
             $scope.feed = res.data.event;
-            $scope.feed.eventImage = "beer.png"
         })
 
     });
