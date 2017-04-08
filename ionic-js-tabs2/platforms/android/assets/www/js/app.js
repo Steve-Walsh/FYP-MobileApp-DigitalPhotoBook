@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ui.router', 'ionic.cloud'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova', 'ui.router', 'ionic.cloud', 'btford.socket-io'])
 
  //.constant('ApiEndpoint', {
  //    url: 'http://34.253.80.13:8080/'
@@ -35,10 +35,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     });
 
-    // Ionic uses AngularUI Router which uses the concept of states
-    // Learn more here: https://github.com/angular-ui/ui-router
-    // Set up the various states which the app can be in.
-    // Each state's controller can be found in controllers.js
     $stateProvider
 
     // setup an abstract state for the tabs directive
@@ -61,6 +57,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
                 controller: 'DurEventCtrl'
             }
         }
+    })
+     .state('durTab.durChat', {
+                url: '/durChat',
+                views: {
+                    'durTab-chat': {
+                        templateUrl: 'templates/durTab-chat.html',
+                        controller: 'DurChatCtrl'
+                    }
+                }
     })
     .state('durTab.durPictures', {
         url: '/durPictures',
@@ -179,7 +184,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
             }
         }
     });
-
+    //notification code
     //$rootScope.$on('cloud:push:notification', function (event, data) {
     //    var msg = data.message;
     //    alert(msg.title + ': ' + msg.text);
@@ -196,9 +201,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 
     });
 
-    $rootScope.$on('cloud:push:notification', function (event, data) {
-        var msg = data.message;
-        alert(msg.title + ': ' + msg.text);
-    });
+    //$rootScope.$on('cloud:push:notification', function (event, data) {
+    //    var msg = data.message;
+    //    alert(msg.title + ': ' + msg.text);
+    //});
 
 });

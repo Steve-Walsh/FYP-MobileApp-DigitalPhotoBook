@@ -23,11 +23,9 @@ angular.module('starter.controllers', [])
 .controller('MyEventsCtrl', function ($scope, $cordovaCamera, $http, ApiEndpoint, $ionicPopup, $state, AuthService) {
 
     var loggedInUser = AuthService.getLoggedInUser()
-    console.log("logged in user is", loggedInUser.id)
 
     $scope.$on('$ionicView.enter', function (e) {
         $http.get(ApiEndpoint.url + "api/events/myEvents/" + loggedInUser.id).then(function (res) {
-            console.log('data ', res)
             $scope.feed = res.data;
         })
 
@@ -41,7 +39,6 @@ angular.module('starter.controllers', [])
     var loggedInUser = AuthService.getLoggedInUser()
 
     $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + $stateParams.eventId).then(function (res) {
-        console.log('data ', res.data.event)
         $scope.event = res.data.event;
         $scope.check = false
 
@@ -65,7 +62,6 @@ angular.module('starter.controllers', [])
 
     $scope.$on('$ionicView.enter', function (e) {
         $http.get(ApiEndpoint.url + "api/mobiles/pictures").then(function (res) {
-            console.log(res.data)
             $scope.feed = res.data;
         })
 
@@ -223,7 +219,6 @@ angular.module('starter.controllers', [])
         
 
         $http.get(ApiEndpoint.url + 'api/events/eventDetails/58e256504e27e734f671c2b4').then(function (res) {
-            console.log('data ', res.data.event)
             $scope.event = res.data.event;
 
             var myEvents = {
@@ -242,6 +237,20 @@ angular.module('starter.controllers', [])
     });
 
 
+})
+
+.controller('DurChatCtrl', function ($scope, ApiEndpoint, chatSocket) {
+
+    $scope.$on('$ionicView.enter', function (e) {
+        chatSocket.emit("connect")
+        //$ionicScrollDelegate.scrollBottom();
+    })
+
+    $scope.loginChat = function () {
+        chatSocket.emit("new message","message for you")
+        console.log(chatSocket)
+
+    }
 });
 
 

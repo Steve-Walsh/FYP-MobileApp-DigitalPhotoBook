@@ -127,13 +127,13 @@ angular.module('starter.services', [])
 .service('Events', function (ApiEndpoint, $http, $q) {
 
     var myEvents = {
-        "data" :[  {
-        image : "/image/picOne"
-    },
+        "data": [{
+            image: "/image/picOne"
+        },
     {
-        image : "image/picTwo"
+        image: "image/picTwo"
     }]
-        }
+    }
 
     var getEvent = function (id) {
         $http.get(ApiEndpoint.url + 'api/events/event/' + id).then(function (res) {
@@ -146,9 +146,32 @@ angular.module('starter.services', [])
         get: function (id) {
             return getEvent(id);
         },
-        getmyEvent : myEvents
-    };
-});
+        getmyEvent: myEvents
+    };  
+})
+
+.service('chatSocket', function (ApiEndpoint, socketFactory) {
+
+    //Create socket and connect to ApiEndpoint
+    var myIoSocket = io.connect("http://34.251.251.67:3000/");
+    console.log("my socket " , myIoSocket)
+
+    socket = socketFactory({
+        ioSocket: myIoSocket
+    });
+    console.log("socket ",socket)
+
+    return socket;
+
+
+})
+
+
+
+
+
+
+;
 
 
 
