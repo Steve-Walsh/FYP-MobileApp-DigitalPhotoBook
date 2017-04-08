@@ -1,37 +1,33 @@
 ﻿<ion-view view-title="Current Pictures">
     <ion-content class="has-footer padding" overflow-scroll="false">
         <ion-list>
-            <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="picture in pictures" type="item-text-wrap" href="#/tab/pictures/{{picture.id}}">
-                <img ng-src="{{picture.face}}">
-                <h2>{{picture.name}}</h2>
-                <p>{{picture.lastText}}  {{picture.id}}</p>
-                <i class="icon ion-chevron-right icon-accessory"></i>
-
-                <ion-option-button class="button-assertive" ng-click="remove(picture)">
+            <ion-item ng-show="imgURI !== null">
+               
+                <div ><img Src="{{imgURI}}" height="200px" style="justify-content: center" /></div>
+                <!--<ion-option-button class="button-assertive" ng-click="remove(picture)" ng-show="imgURI !== null">
                     Delete
-                </ion-option-button>
+                </ion-option-button>-->
             </ion-item>
         </ion-list>
 
-      
-       
-
-
-        <div class="text-center">
-            <div ng-show="imgURI !== null"><img Src="{{imgURI}}" height="200px" style="justify-content: center" /></div>
-            <button class="button" ng-click="takePicture()">Take Picture</button>
-        </div>
-        {{fileName}}
-
-
     </ion-content>
 
-    <ion-footer-bar>
-        <div class="text-center">
-            <button class="button title" ng-click="takePicture()">Take Picture</button>
-            <div ng-show="imgURI !== null"> <button class="button" ng-click="uploadPicture()">Upload</button></div>
-        </div>
-    </ion-footer-bar>
+            <div class="tabs tabs-dark" style="height:auto;">
+
+                <div class="row">
+                    <div class="col">
+
+                        <div class="row">
+                            <div class="col">
+                                <button class="button button-block button-balanced" ng-click="takePicture()">Take Picture</button>
+                                <div ng-show="imgURI !== null"> <button class="button button-block button-balanced" ng-click="uploadPicture()">Upload</button></div>                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
 
 
 </ion-view>

@@ -2,14 +2,34 @@
     <ion-content overflow-scroll="false" class="padding">
         <ion-list>
             <ion-toggle ng-model="settings.enableFriends">
-                Enable Friends
+                Enable Notifications
             </ion-toggle>
-            <button class="button button-full button-assertive" ng-click="logout()">
-                Logout
-            </button>
+            <ion-toggle ng-model="settings.enableChat">
+                Enable Event Chat
+            </ion-toggle>
 
-            <a href="#/durTab/durEvent" id="login-button4" class="button button-calm  button-block">bypass dur event</a>
+
+<!--<a href="#/durTab/durEvent" id="login-button4" class="button button-calm  button-block">bypass dur event</a>-->
 
         </ion-list>
     </ion-content>
+
+
+    <div class="tabs tabs-dark" style="height:auto;">
+
+        <div class="row">
+            <div class="col">
+
+                <div class="row">
+                    <div class="col">
+                        <button class="button button-full button-assertive" ng-click="logout()">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 </ion-view>

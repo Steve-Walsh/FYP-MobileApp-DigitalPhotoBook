@@ -1,6 +1,11 @@
-<ion-view title="Login" id="page5">
-  <ion-content padding="true" class="has-header pading" overflow-scroll="false">
-    <form id="userDetails" class="list">
+<ion-view hide-nav-bar="true">
+  <ion-content padding="true" class="pading" overflow-scroll="false">
+    <form id="userDetails" class="list" style="text-align: center">
+        <div style="margin: 0 auto;">
+            <img src="/img/icon.png" style="height: 150px;">
+        </div>
+       <h3 style="text-align: center ;" class="balanced"> Log-in to your account</h3>
+        <div class="spacer" style="height: 20px;"></div>
       <ion-list id="login-list1">
         <label class="item item-input" id="username">
           <span class="input-label">Username</span>
@@ -13,10 +18,8 @@
       </ion-list>
       <div class="spacer" style="height: 40px;"></div>
 
-      <button id="login-button1" ng-click="login()" class="button button-calm  button-block">Log in</button>
-      <a href="/#/signup" id="login-button2" class="button button-positive  button-block button-clear">Or create an account</a>
-      <!--<a href="#/tab/allEvents" id="login-button3" class="button button-positive  button-block button-clear">bypass</a>-->
-      <!--<a href="#/durTab/durEvent" id="login-button4" class="button button-calm  button-block button-clear">bypass dur event</a>-->
+      <button id="login-button1" ng-click="login()" class="button button-balanced  button-block">Log in</button>
+      <a href="/#/signup" id="login-button2" class="button button-balanced  button-block button-clear">New to us? Sign Up</a>
     </form>
   </ion-content>
 </ion-view>

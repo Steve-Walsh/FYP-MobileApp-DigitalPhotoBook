@@ -36,12 +36,24 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('EventDetailCtrl', function ($scope, $stateParams, Events, $http, ApiEndpoint, $timeout) {
+.controller('EventDetailCtrl', function ($scope, $stateParams, Events, $http, ApiEndpoint, $timeout, AuthService) {
 
+    var loggedInUser = AuthService.getLoggedInUser()
 
     $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + $stateParams.eventId).then(function (res) {
         console.log('data ', res.data.event)
         $scope.event = res.data.event;
+        $scope.check = false
+
+        if ($scope.event.adminId == loggedInUser.id) {
+            $scope.check = true
+        } else if ($scope.event.attenders > 0) {
+            $scope.event.attenders.forEach(function (a) {
+                if (a._id == loggedInUser.id) {
+                    $scope.check = true
+                }
+            })
+        }
     })
 })
 
@@ -205,13 +217,26 @@ angular.module('starter.controllers', [])
  
 })
 
-.controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
+.controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state, AuthService) {
 
     $scope.$on('$ionicView.enter', function (e) {
+        
 
         $http.get(ApiEndpoint.url + 'api/events/eventDetails/58e256504e27e734f671c2b4').then(function (res) {
             console.log('data ', res.data.event)
-            $scope.feed = res.data.event;
+            $scope.event = res.data.event;
+
+            var myEvents = {
+                "data": [{
+                    image: "/img/picOne.jpeg"
+                },
+            {
+                image: "img/picTwo.jpeg"
+            }]
+            }
+
+            $scope.event.myPictures = myEvents
+
         })
 
     });

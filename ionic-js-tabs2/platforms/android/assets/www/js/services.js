@@ -126,6 +126,15 @@ angular.module('starter.services', [])
 
 .service('Events', function (ApiEndpoint, $http, $q) {
 
+    var myEvents = {
+        "data" :[  {
+        image : "/image/picOne"
+    },
+    {
+        image : "image/picTwo"
+    }]
+        }
+
     var getEvent = function (id) {
         $http.get(ApiEndpoint.url + 'api/events/event/' + id).then(function (res) {
             console.log('data ', res.data.event)
@@ -136,7 +145,8 @@ angular.module('starter.services', [])
     return {
         get: function (id) {
             return getEvent(id);
-        }
+        },
+        getmyEvent : myEvents
     };
 });
 

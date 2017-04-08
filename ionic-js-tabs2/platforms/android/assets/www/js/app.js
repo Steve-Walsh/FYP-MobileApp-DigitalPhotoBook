@@ -195,8 +195,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
 
     });
+
     $rootScope.$on('cloud:push:notification', function (event, data) {
         var msg = data.message;
         alert(msg.title + ': ' + msg.text);
     });
+
 });
