@@ -154,14 +154,15 @@ angular.module('starter.services', [])
 
     //Create socket and connect to ApiEndpoint
     var myIoSocket = io.connect("http://34.251.251.67:3000/");
-    console.log("my socket " , myIoSocket)
+   
 
     socket = socketFactory({
         ioSocket: myIoSocket
     });
-    console.log("socket ",socket)
 
-    return socket;
+
+
+    return socket;  
 
 
 })

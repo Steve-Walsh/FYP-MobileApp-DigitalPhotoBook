@@ -239,18 +239,96 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('DurChatCtrl', function ($scope, ApiEndpoint, chatSocket) {
+.controller('DurChatCtrl', function ($scope, ApiEndpoint, chatSocket, AuthService, $ionicScrollDelegate) {
+
+    $scope.data = {};
+    var loggedInUser = AuthService.getLoggedInUser()
+
 
     $scope.$on('$ionicView.enter', function (e) {
         chatSocket.emit("connect")
-        //$ionicScrollDelegate.scrollBottom();
+
+        //chatSocket.emit("room", '58e256504e27e734f671c2b4');
+        $ionicScrollDelegate.scrollBottom();
     })
 
-    $scope.loginChat = function () {
-        chatSocket.emit("new message","message for you")
-        console.log(chatSocket)
+    //$scope.sentMsg = function () {
+    //    console.log($scope.data)
+    //    chatSocket.emit("new message", $scope.data.message)
+    //    console.log(chatSocket)
+    //    $scope.data.message = "";
+    //}
 
-    }
+    //extra stuff
+
+    var me = loggedInUser;
+
+    $scope.chatMessages = [];
+
+    $scope.humanize = function (timestamp) {
+        return moment(timestamp).fromNow();
+    };
+
+    //me.current_room = localStorageService.get('room');
+
+    //var current_user = localStorageService.get('username');
+
+    //$scope.isNotCurrentUser = function (user) {
+
+    //    if (current_user != user) {
+    //        return 'not-current-user';
+    //    }
+    //    return 'current-user';
+    //};
+
+
+    $scope.sendTextMessage = function () {
+
+        var msg = {
+            'room': "58e256504e27e734f671c2b4",
+            'user': loggedInUser.email,
+            'text': $scope.data.message,
+            'time': moment()
+        };
+
+
+        //me.messages.push($scope.data.message);
+        $ionicScrollDelegate.scrollBottom();
+
+        //me.message = '';
+
+        chatSocket.emit('new message', msg);
+    };
+
+
+    $scope.leaveRoom = function () {
+
+        //var msg = {
+        //    'user': current_user,
+        //    'room': me.current_room,
+        //    'time': moment()
+        //};
+
+        chatSocket.emit('disconnect');
+        //$state.go('rooms');
+
+    };
+
+    chatSocket.on('new user', function (msg) {
+        console.log(msg)
+        //$scope.chatMessages.pus(msg);
+        //$ionicScrollDelegate.scrollBottom();
+    });
+
+
+    chatSocket.on('message', function (msg) {
+        console.log(msg)
+        //$scope.chatMessages.pus(msg);
+        $ionicScrollDelegate.scrollBottom();
+    });
+
+
+
 });
 
 
