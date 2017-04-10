@@ -196,7 +196,10 @@ angular.module('starter.controllers', [])
         options.fileName = "58e256504e27e734f671c2b4"
         options.mimeType = "image/jpeg";
 
-        var headers ={'token' : $http.defaults.headers.common.Authorization}
+        var headers = {
+            'token': $http.defaults.headers.common.Authorization,
+            'event': '58e256504e27e734f671c2b4'
+        }
         options.headers = headers
 
         
@@ -292,10 +295,10 @@ angular.module('starter.controllers', [])
         };
 
 
-        //me.messages.push($scope.data.message);
+        $scope.chatMessages.push(msg);
         $ionicScrollDelegate.scrollBottom();
 
-        //me.message = '';
+        $scope.message = '';
 
         chatSocket.emit('new message', msg);
     };
@@ -303,28 +306,17 @@ angular.module('starter.controllers', [])
 
     $scope.leaveRoom = function () {
 
-        //var msg = {
-        //    'user': current_user,
-        //    'room': me.current_room,
-        //    'time': moment()
-        //};
-
         chatSocket.emit('disconnect');
-        //$state.go('rooms');
 
     };
 
-    chatSocket.on('new user', function (msg) {
-        console.log(msg)
-        //$scope.chatMessages.pus(msg);
-        //$ionicScrollDelegate.scrollBottom();
-    });
 
 
     chatSocket.on('message', function (msg) {
         console.log(msg)
-        //$scope.chatMessages.pus(msg);
+        $scope.chatMessages.push(msg);
         $ionicScrollDelegate.scrollBottom();
+        console.log($scope.chatMessages)
     });
 
 
