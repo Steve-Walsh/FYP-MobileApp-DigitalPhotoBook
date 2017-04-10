@@ -193,9 +193,9 @@ angular.module('starter.controllers', [])
         var uri = encodeURI(ApiEndpoint.url + 'api/photo/');
         var options = new FileUploadOptions();
         options.fileKey = "userPhoto";
-        options.fileName = "58e256504e27e734f671c2b4"
+        options.fileName = fileURL.substr(fileURL.lastIndexOf('/') + 1)
         options.mimeType = "image/jpeg";
-
+        console.log(options.fileName)
         var headers = {
             'token': $http.defaults.headers.common.Authorization,
             'event': '58e256504e27e734f671c2b4'

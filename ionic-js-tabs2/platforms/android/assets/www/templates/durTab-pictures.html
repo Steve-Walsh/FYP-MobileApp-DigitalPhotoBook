@@ -3,14 +3,18 @@
         <ion-list>
             <ion-item ng-show="imgURI !== null">
                
-                <div ><img Src="{{imgURI}}" height="200px" style="justify-content: center" /></div>
+                <div ><!--<img Src="{{imgURI}}" height="200px" style="justify-content: center" />--></div>
                 <!--<ion-option-button class="button-assertive" ng-click="remove(picture)" ng-show="imgURI !== null">
                     Delete
                 </ion-option-button>-->
+            
             </ion-item>
         </ion-list>
+        {{base64Img}}
 
+        {{imgURI}}
     </ion-content>
+ 
 
             <div class="tabs tabs-dark" style="height:auto;">
 

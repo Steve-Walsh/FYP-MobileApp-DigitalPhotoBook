@@ -17,6 +17,14 @@ angular.module('starter.services', [])
     }
 
     var currentUser = function () {
+        console.log("before push ")
+        $ionicPush.register().then(function (t) {
+            console.log($ionicPush.saveToken(t))
+            return $ionicPush.saveToken(t);
+        }).then(function (t) {
+            console.log('Token saved:', t.token);
+        });
+
         if (isAuthenticated) {
             var token = window.localStorage['photoApp-token'];
             var payload = token.split('.')[1];
@@ -71,14 +79,6 @@ angular.module('starter.services', [])
 
                     storeUserCredentials(result.data.token);
                     resolve(result.data.msg);
-
-                    $ionicPush.register().then(function (t) {
-                        return $ionicPush.saveToken(t);
-                    }).then(function (t) {
-                        console.log('Token saved:', t.token);
-                    });
-
-
 
                 } else {
                     reject(result.data.msg);
