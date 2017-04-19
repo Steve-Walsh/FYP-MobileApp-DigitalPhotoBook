@@ -23,9 +23,14 @@ angular.module('starter.controllers', [])
 .controller('MyEventsCtrl', function ($scope, $cordovaCamera, $http, ApiEndpoint, $ionicPopup, $state, AuthService) {
 
     var loggedInUser = AuthService.getLoggedInUser()
+    console.log("id is ", loggedInUser.id)
 
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "api/events/myEvents/" + loggedInUser.id).then(function (res) {
+        $http.get(ApiEndpoint.url + "api/events/myEvents/" + loggedInUser.id ,{
+            headers: {
+                Authorization: 'Bearer ' + AuthService.getToken()
+            }
+        }).then(function (res) {
             $scope.feed = res.data;
         })
 
@@ -95,7 +100,15 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('AccountCtrl', function ($scope, $state, AuthService, $rootScope, $ionicUser, $ionicPush) {
+.controller('AccountCtrl', function ($scope, $state, AuthService, $rootScope, $ionicUser, $ionicPush, Events) {
+
+
+
+    $scope.$on('$ionicView.enter', function (e) {
+    var loggedInUser = AuthService.getLoggedInUser()
+
+    var event = Events.currentEvent(loggedInUser)
+    });
 
 
     $scope.logout = function () {
@@ -216,12 +229,15 @@ angular.module('starter.controllers', [])
  
 })
 
-.controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state, AuthService) {
-
+.controller('DurEventCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state, AuthService, Events) {
+    var eventId;
     $scope.$on('$ionicView.enter', function (e) {
+
+        var eventId = Events.getEventId()
+      
         
 
-        $http.get(ApiEndpoint.url + 'api/events/eventDetails/58e256504e27e734f671c2b4').then(function (res) {
+         $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + Events.getEventId()).then(function (res) {
             $scope.event = res.data.event;
 
             var myEvents = {
@@ -312,7 +328,7 @@ angular.module('starter.controllers', [])
 
 
 
-    chatSocket.on('message', function (msg) {
+    chatSocket.on('new message', function (msg) {
         console.log(msg)
         $scope.chatMessages.push(msg);
         $ionicScrollDelegate.scrollBottom();

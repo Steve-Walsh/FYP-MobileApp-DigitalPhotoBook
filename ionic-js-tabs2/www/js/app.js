@@ -59,14 +59,23 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
         }
     })
      .state('durTab.durChat', {
-                url: '/durChat',
-                views: {
-                    'durTab-chat': {
-                        templateUrl: 'templates/durTab-chat.html',
-                        controller: 'DurChatCtrl'
-                    }
-                }
-    })
+        url: '/durChat',
+        views: {
+            'durTab-chat': {
+                templateUrl: 'templates/durTab-chat.html',
+                controller: 'DurChatCtrl'
+            }
+        }
+     })
+     .state('durTab.account', {
+        url: '/durAccount',
+        views: {
+            'durTab-account': {
+                templateUrl: 'templates/durTab-account.html',
+                controller: 'AccountCtrl'
+            }
+         }
+     })
     .state('durTab.durPictures', {
         url: '/durPictures',
         views: {

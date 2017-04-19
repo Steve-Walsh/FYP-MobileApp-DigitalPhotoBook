@@ -7,13 +7,19 @@ angular.module('starter.services', [])
     var authToken;
 
 
-
+        
 
     function loadUserCredentials() {
         var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
         if (token) {
             useCredentials(token);
         }
+    }
+
+    var getTokenAPI = function () {
+        var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
+        return token;
+
     }
 
     var currentUser = function () {
@@ -102,6 +108,9 @@ angular.module('starter.services', [])
         },
         getLoggedInUser: function () {
             return currentUser();
+        },
+        getToken: function () {
+            return getTokenAPI();
         }
     };
 })
@@ -124,7 +133,9 @@ angular.module('starter.services', [])
 
 
 
-.service('Events', function (ApiEndpoint, $http, $q) {
+.service('Events', function (ApiEndpoint, $http, $q, AuthService) {
+
+    var LOCAL_EVENT_KEY = "eventToken";
 
     var myEvents = {
         "data": [{
@@ -142,11 +153,52 @@ angular.module('starter.services', [])
         })
     };
 
+    var getEventIdAPI = function () {
+        var eventId = window.localStorage.getItem(LOCAL_EVENT_KEY);
+        console.log("id is ",eventId)
+        return eventId;
+
+    }
+
+    var getCurrentEvent = function (loggedInUser) {
+        $http.get(ApiEndpoint.url + "api/events/myEvents/" + loggedInUser.id, {
+            headers: {
+                Authorization: 'Bearer ' + AuthService.getToken()
+            }
+        }).success(function (res) {
+           var check = true
+            res.forEach(function(item){
+                if (moment(item.startTime) < moment() < moment(item.endTime)) {
+                    console.log("yes ", item)
+                    setEventToken(item._id)
+                    check = false
+                }
+            })
+            if (check) {
+                delEventToken()
+            }
+        })
+    }
+    function setEventToken(id) {
+        window.localStorage.setItem(LOCAL_EVENT_KEY, id)
+    }
+    function delEventToken() {
+        window.localStorage.removeItem(LOCAL_EVENT_KEY)
+    }
+
+
+
     return {
         get: function (id) {
             return getEvent(id);
         },
-        getmyEvent: myEvents
+        getmyEvent: myEvents,
+        currentEvent: function (loggedInUser) {
+            getCurrentEvent(loggedInUser)
+        },
+        getEventId: function () {
+                return getEventIdAPI();
+            }
     };  
 })
 
@@ -154,25 +206,11 @@ angular.module('starter.services', [])
 
     //Create socket and connect to ApiEndpoint
     var myIoSocket = io.connect("http://34.251.251.67:3000/");
-   
-
     socket = socketFactory({
         ioSocket: myIoSocket
     });
-
-
-
     return socket;  
-
-
-})
-
-
-
-
-
-
-;
+});
 
 
 
