@@ -107,7 +107,13 @@ angular.module('starter.controllers', [])
     $scope.$on('$ionicView.enter', function (e) {
     var loggedInUser = AuthService.getLoggedInUser()
 
-    var event = Events.currentEvent(loggedInUser)
+    $scope.event = Events.currentEvent(loggedInUser)
+       $scope.test = "new data"
+
+    //    .success(function (res) {
+    //    console.log("res is", res)
+    //})
+    //console.log("even is ", $scope.event)
     });
 
 

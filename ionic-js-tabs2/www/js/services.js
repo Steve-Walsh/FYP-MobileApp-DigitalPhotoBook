@@ -79,7 +79,7 @@ angular.module('starter.services', [])
     var login = function (user) {
         console.log(user)
         return $q(function (resolve, reject) {
-            $http.post(ApiEndpoint.url + 'authenticate', user).then(function (result) {
+            $http.post(ApiEndpoint.url + '/api/users/login', user).then(function (result) {
                 console.log("result is : ", result);
                 if (result.data.success) {
 
@@ -169,9 +169,10 @@ angular.module('starter.services', [])
            var check = true
             res.forEach(function(item){
                 if (moment(item.startTime) < moment() < moment(item.endTime)) {
-                    console.log("yes ", item)
                     setEventToken(item._id)
                     check = false
+                    console.log("in loop", item)
+                    return item
                 }
             })
             if (check) {
@@ -179,6 +180,7 @@ angular.module('starter.services', [])
             }
         })
     }
+
     function setEventToken(id) {
         window.localStorage.setItem(LOCAL_EVENT_KEY, id)
     }
@@ -194,7 +196,8 @@ angular.module('starter.services', [])
         },
         getmyEvent: myEvents,
         currentEvent: function (loggedInUser) {
-            getCurrentEvent(loggedInUser)
+            return getCurrentEvent(loggedInUser)
+            
         },
         getEventId: function () {
                 return getEventIdAPI();
