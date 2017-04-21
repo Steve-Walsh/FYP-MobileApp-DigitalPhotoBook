@@ -79,7 +79,7 @@ angular.module('starter.services', [])
     var login = function (user) {
         console.log(user)
         return $q(function (resolve, reject) {
-            $http.post(ApiEndpoint.url + '/api/users/login', user).then(function (result) {
+            $http.post(ApiEndpoint.url + 'api/users/login', user).then(function (result) {
                 console.log("result is : ", result);
                 if (result.data.success) {
 
@@ -135,6 +135,49 @@ angular.module('starter.services', [])
 
 .service('Events', function (ApiEndpoint, $http, $q, AuthService) {
 
+    addPersonToEvent = function (newAttender, eventId) {
+        console.log("add person called")
+        var check = false
+
+        $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + eventId, {
+            headers: {
+                Authorization: 'Bearer ' + AuthService.getToken()
+            }
+        })
+        .success(function (res) {
+            if (res.event.adminId == newAttender._id) {
+                check = true
+            }
+            if (res.event.attenders.length > 0) {
+                res.event.attenders.forEach(function (p) {
+                    if (p.id == newAttender._id) {
+                        check = true
+                    }
+                })
+            }
+            if (!check) {
+                $http.post(ApiEndpoint.url + 'api/events/joinEvent/' + eventId, newAttender, {
+                    headers: {
+                        Authorization: 'Bearer ' + AuthService.getToken()
+                    }
+                }).error(function (err) {
+                    console.log('error : ' + err)
+                })
+            }
+        })
+    }
+
+    leaveAnEvent = function (user) {
+        $http.post(ApiEndpoint.url + 'api/events/removeUser', user, {
+            headers: {
+                Authorization: 'Bearer ' + AuthService.getToken()
+            }
+        })
+        .error(function (err) {
+            console.log('error : ' + err)
+        })
+    }
+
     var LOCAL_EVENT_KEY = "eventToken";
 
     var myEvents = {
@@ -147,7 +190,11 @@ angular.module('starter.services', [])
     }
 
     var getEvent = function (id) {
-        $http.get(ApiEndpoint.url + 'api/events/event/' + id).then(function (res) {
+        $http.get(ApiEndpoint.url + 'api/events/event/' + id, {
+            headers: {
+                Authorization: 'Bearer ' + AuthService.getToken()
+            }
+        }).then(function (res) {
             console.log('data ', res.data.event)
             return res.data.event;
         })
@@ -200,8 +247,8 @@ angular.module('starter.services', [])
             
         },
         getEventId: function () {
-                return getEventIdAPI();
-            }
+            return getEventIdAPI();
+       }
     };  
 })
 

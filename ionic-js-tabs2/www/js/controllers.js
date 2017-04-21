@@ -43,24 +43,45 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('EventDetailCtrl', function ($scope, $stateParams, Events, $http, ApiEndpoint, $timeout, AuthService) {
+.controller('EventDetailCtrl', function ($scope, $stateParams, Events, $http, ApiEndpoint, $timeout, AuthService, Events, $state) {
 
     var loggedInUser = AuthService.getLoggedInUser()
 
-    $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + $stateParams.eventId).then(function (res) {
+    $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + $stateParams.eventId, {
+        headers: {
+            Authorization: 'Bearer ' + AuthService.getToken()
+        }
+    }).then(function (res) {
         $scope.event = res.data.event;
         $scope.check = false
+        console.log("the event is ", res.data.event.attenders)
 
         if ($scope.event.adminId == loggedInUser.id) {
             $scope.check = true
-        } else if ($scope.event.attenders > 0) {
-            $scope.event.attenders.forEach(function (a) {
-                if (a._id == loggedInUser.id) {
+        } else if (res.data.event.attenders.length > 0) {
+            res.data.event.attenders.forEach(function (a) {
+                console.log(a.id, " // ",  loggedInUser.id)
+                if (a.id == loggedInUser.id) {
                     $scope.check = true
                 }
             })
         }
     })
+
+    $scope.joinEvent = function (event) {
+        console.log("join event called")
+        addPersonToEvent(loggedInUser, event._id)
+        $state.go("tab.myEvents")
+    }
+
+    $scope.leaveEvent = function (event) {
+        var user = loggedInUser
+        user.eventId = event._id
+        leaveAnEvent(user)
+        $state.go("tab.allEvents")
+    }
+
+
 })
 
 .controller('PicturesCtrl', function ($scope, $http, ApiEndpoint, $ionicPopup, $state) {
@@ -70,7 +91,11 @@ angular.module('starter.controllers', [])
 
 
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "api/mobiles/pictures").then(function (res) {
+        $http.get(ApiEndpoint.url + "api/mobiles/pictures", {
+            headers: {
+                Authorization: 'Bearer ' + AuthService.getToken()
+            }
+        }).then(function (res) {
             $scope.feed = res.data;
         })
 
@@ -111,8 +136,9 @@ angular.module('starter.controllers', [])
     $scope.$on('$ionicView.enter', function (e) {
     var loggedInUser = AuthService.getLoggedInUser()
 
-    $scope.event = Events.currentEvent(loggedInUser)
-       $scope.test = "new data"
+    $scope.eventDetails = Events.currentEvent(loggedInUser)
+
+    $scope.event = Events.getEventId()
 
     //    .success(function (res) {
     //    console.log("res is", res)
@@ -171,13 +197,13 @@ angular.module('starter.controllers', [])
 
 
 .controller('DurPicturesCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state, $cordovaFileTransfer) {
-
+    //TODO remove hard coded event
     $scope.$on('$ionicView.enter', function (e) {
         $scope.imgURI = null;
         $scope.base64Img = null;
 
     });
-
+    var eventId = Events.getEventId()
 
     $scope.takePicture = function () {
         var options = {
@@ -221,7 +247,7 @@ angular.module('starter.controllers', [])
         console.log(options.fileName)
         var headers = {
             'token': $http.defaults.headers.common.Authorization,
-            'event': '58e256504e27e734f671c2b4'
+            'event': eventId
         }
         options.headers = headers
 
@@ -244,7 +270,12 @@ angular.module('starter.controllers', [])
     $scope.$on('$ionicView.enter', function (e) {
 
         var eventId = Events.getEventId()
-         $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + Events.getEventId()).then(function (res) {
+        $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + Events.getEventId(), {
+            headers: {
+                Authorization: 'Bearer ' + AuthService.getToken()
+            }
+        }).then(function (res) {
+
             $scope.event = res.data.event;
         })
 

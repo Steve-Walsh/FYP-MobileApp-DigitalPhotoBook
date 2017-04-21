@@ -17,7 +17,7 @@
         <div ng-if="event.pictures.length == 0"> There is 150 pictures at this event</div><div ng-if="event.pictures.length > 0"> {{event.pictures.length}}</div>
      
     </p>
-      <div ng-if="check"><button id="login-button1" ng-click="login()" class="button button-assertive  button-block">Leave Event</button></div>
-      <div ng-if="!check"><button id="login-button1" ng-click="login()" class="button button-balanced  button-block">Join Event</button></div>
+      <div ng-if="check"><button id="login-button1" ng-click="leaveEvent(event)" class="button button-assertive  button-block">Leave Event</button></div>
+      <div ng-if="!check"><button id="login-button1" ng-click="joinEvent(event)" class="button button-balanced  button-block">Join Event</button></div>
   </ion-content>
 </ion-view>
