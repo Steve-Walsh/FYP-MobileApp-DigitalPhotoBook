@@ -244,23 +244,8 @@ angular.module('starter.controllers', [])
     $scope.$on('$ionicView.enter', function (e) {
 
         var eventId = Events.getEventId()
-      
-        
-
          $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + Events.getEventId()).then(function (res) {
             $scope.event = res.data.event;
-
-            var myEvents = {
-                "data": [{
-                    image: "/img/picOne.jpeg"
-                },
-            {
-                image: "img/picTwo.jpeg"
-            }]
-            }
-
-            $scope.event.myPictures = myEvents
-
         })
 
     });
@@ -268,29 +253,19 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('DurChatCtrl', function ($scope, ApiEndpoint, chatSocket, AuthService, $ionicScrollDelegate) {
+.controller('DurChatCtrl', function ($scope, ApiEndpoint, chatSocket, AuthService, $ionicScrollDelegate, Events) {
 
     $scope.data = {};
-    var loggedInUser = AuthService.getLoggedInUser()
+    $scope.loggedInUser = AuthService.getLoggedInUser()
+    var eventId = Events.getEventId()
 
 
     $scope.$on('$ionicView.enter', function (e) {
         chatSocket.emit("connect")
-
-        //chatSocket.emit("room", '58e256504e27e734f671c2b4');
         $ionicScrollDelegate.scrollBottom();
     })
 
-    //$scope.sentMsg = function () {
-    //    console.log($scope.data)
-    //    chatSocket.emit("new message", $scope.data.message)
-    //    console.log(chatSocket)
-    //    $scope.data.message = "";
-    //}
 
-    //extra stuff
-
-    var me = loggedInUser;
 
     $scope.chatMessages = [];
 
@@ -298,31 +273,22 @@ angular.module('starter.controllers', [])
         return moment(timestamp).fromNow();
     };
 
-    //me.current_room = localStorageService.get('room');
-
-    //var current_user = localStorageService.get('username');
-
-    //$scope.isNotCurrentUser = function (user) {
-
-    //    if (current_user != user) {
-    //        return 'not-current-user';
-    //    }
-    //    return 'current-user';
-    //};
-
 
     $scope.sendTextMessage = function () {
 
+
         var msg = {
-            'room': "58e256504e27e734f671c2b4",
-            'user': loggedInUser.email,
+            'room': eventId,
+            'user': $scope.loggedInUser.email,
             'text': $scope.data.message,
             'time': moment()
         };
+        if ($scope.data.message != null) {
+            $scope.chatMessages.push(msg);
+            $ionicScrollDelegate.scrollBottom();
+        }
 
 
-        $scope.chatMessages.push(msg);
-        $ionicScrollDelegate.scrollBottom();
 
         $scope.message = '';
 
@@ -340,9 +306,12 @@ angular.module('starter.controllers', [])
 
     chatSocket.on('new message', function (msg) {
         console.log(msg)
-        $scope.chatMessages.push(msg);
-        $ionicScrollDelegate.scrollBottom();
-        console.log($scope.chatMessages)
+        if (msg.room == eventId) {
+            $scope.chatMessages.push(msg);
+            $ionicScrollDelegate.scrollBottom();
+            console.log($scope.chatMessages)
+        }
+  
     });
 
 

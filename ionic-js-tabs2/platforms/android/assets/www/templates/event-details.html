@@ -11,8 +11,8 @@
 
     <p>
         <div>Event Location is : {{event.location}}</div>
-        <div>Event starting : {{event.startTime}}  </div>
-        <div>Event ending : {{event.endTime}}</div>
+        <div>Event starting : {{event.startTime | date:"dd/MM/yyyy 'at' h:mma"}}  </div>
+        <div>Event ending : {{event.endTime | date:"dd/MM/yyyy 'at' h:mma"}}</div>
         <div ng-if="event.attenders.length == 0"> There is 30 people attending this event</div><div ng-if="event.attenders.length > 0"> {{event.attenders.length}}</div>
         <div ng-if="event.pictures.length == 0"> There is 150 pictures at this event</div><div ng-if="event.pictures.length > 0"> {{event.pictures.length}}</div>
      

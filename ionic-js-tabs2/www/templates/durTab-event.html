@@ -15,20 +15,20 @@
         <p>
             <div>Event Location is : {{event.location }}</div>
             <div>Event is going to end : {{event.endTime | date:"dd/MM/yyyy 'at' h:mma"}}</div>
-            <div ng-if="event.attenders.length == 0"> There is 30 people attending this event</div><div ng-if="event.attenders.length > 0"> {{event.attenders.length}}</div>
-            <div ng-if="event.pictures.length == 0"> There is 150 pictures taken so far!</div><div ng-if="event.pictures.length > 0"> {{event.pictures.length}}</div>
+             <div ng-if="event.attenders.length == 0"> There is 1 attender </div><div ng-if="event.attenders.length > 0">There are {{event.attenders.length}} people attending this event</div>
+            <div ng-if="event.pictures.length == 0">There are no pictures yet! Be the first to upload one!</div><div ng-if="event.pictures.length > 0">There are {{event.pictures.length}} pictures taken so far!</div> 
 
         </p>
-        <div class="spacer" style="height: 20px;"></div>
+        <!--<div class="spacer" style="height: 20px;"></div>-->
 
-        <div ng-show="event.pictures == 0">
+        <!--<div ng-show="event.pictures == 0">
             <h3> Your uploaded pictures</h3>
         <ion-item class="item-remove-animate item-thumbnail-left item-icon-right" ng-repeat="data in event.myPictures.data" type="item-text-wrap">
             <img ng-src="{{data.image}}">
             <button  class="button button-assertive item-right " ng-click="remove(data)" > delete</button>
 
         </ion-item>
-            </div>
+            </div>-->
 
     </ion-content>
 

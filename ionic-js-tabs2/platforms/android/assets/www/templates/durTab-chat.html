@@ -1,33 +1,18 @@
-﻿<!--<ion-view view-title="Events">
-    <ion-content class="padding" overflow-scroll="false">
-
-        <form id="sentMsg" class="list" style="text-align: center">
-           
-                <label class="item item-input" id="text">
-                    <span class="input-label">Password</span>
-                    <input type="text" placeholder="" ng-model="data.message">
-                </label>
-            </ion-list>
-            <div class="spacer" style="height: 40px;"></div>
-            <button class="button button-full button-calm" ng-click="sentMsg()">
-                chat
-            </button>
-
-        </form>
-
-
-        </ion-content>
-
-        </ion-view>-->
-
-<ion-view title="Event Chat" >
+﻿<ion-view title="Event Chat" >
 
     <ion-content class="padding" overflow-scroll="false">
 
         <div class="list" id="messages" ng-if="chatMessages.length > 0">
             <li class="item item-text-wrap no-border" ng-repeat="msg in chatMessages">
                 <div class="msg">
-                    <div class="details padding">
+                    <div class="details padding" ng-if="msg.user == loggedInUser.email" style="text-align: right !important;">
+                        <p>
+                            <div class="user">{{ msg.user }}</div>
+                            <div class="message">{{ msg.text }}</div>
+                        </p>
+                        <small>{{ humanize(msg.time) }}</small>
+                    </div>
+                    <div class="details padding" ng-if="msg.user != loggedInUser.email">
                         <p>
                             <div class="user">{{ msg.user }}</div>
                             <div class="message">{{ msg.text }}</div>
@@ -47,11 +32,12 @@
     </ion-content>
 
 
-    <footer class="bar bar-footer bar-positive item-input-inset has-content">
+    <ion-footer-bar class="bar bar-footer bar-positive item-input-inset has-content">
         <label class="item-input-wrapper">
             <input type="text" id="message" name="message" ng-model="data.message" placeholder="Type message">
         </label>
         <a class="button button-icon icon ion-android-send" ng-click="sendTextMessage()"></a>
-    </footer>
+    </ion-footer-bar>
 
 </ion-view>
+
