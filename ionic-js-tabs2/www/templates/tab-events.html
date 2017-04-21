@@ -3,32 +3,15 @@
 
       <ion-list>
           <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="data in feed" type="item-text-wrap" href="#/tab/eventDetails/{{data._id}}">
-              <img ng-src="/img/{{data.iconPicked}}">
+              <img ng-src="img/{{data.iconPicked}}">
               <h2>{{data.title}}</h2>
               <p>{{data.info}}</p>
               <i class="icon ion-chevron-right icon-accessory"></i>
 
-              <!--<ion-option-button class="button-assertive" ng-click="remove(chat)">
-                  Delete
-              </ion-option-button>-->
           </ion-item>
       </ion-list>
 
 
-
-              <!--<ion-card>
-                      <button class="button button-energized" ng-click="addImage()">
-                          Add image
-                      </button><br><br>
-                      <ion-scroll>
-                          <img ng-repeat="image in images" ng-src="{{urlForImage(image)}}" height="200px" />
-                      </ion-scroll>
-
-
-                  <div ng-show="imgURI !== undefined"><img Src="{{imgURI}}" height="200px" style="justify-content: center"/></div>
-                  <button class="button" ng-click="takePicture()">Take Picture</button>
-             
-              </ion-card>-->
  
 
   </ion-content>

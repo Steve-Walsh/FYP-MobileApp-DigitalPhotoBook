@@ -4,12 +4,16 @@ angular.module('starter.controllers', [])
 //    url: 'http://34.252.51.64:8080/api/'
 //})
 
-.controller('AllEventsCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state) {
+.controller('AllEventsCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state, AuthService) {
 
 
 
     $scope.$on('$ionicView.enter', function (e) {
-        $http.get(ApiEndpoint.url + "api/mobiles/events").then(function (res) {
+        $http.get(ApiEndpoint.url + "api/events/", {
+            headers: {
+                Authorization: 'Bearer ' + AuthService.getToken()
+            }
+        }).then(function (res) {
             //var alertPopup = $ionicPopup.alert({
             $scope.feed = res.data;
         })

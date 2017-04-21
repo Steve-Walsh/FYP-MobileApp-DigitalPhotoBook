@@ -79,7 +79,7 @@ angular.module('starter.services', [])
     var login = function (user) {
         console.log(user)
         return $q(function (resolve, reject) {
-            $http.post(ApiEndpoint.url + 'authenticate', user).then(function (result) {
+            $http.post(ApiEndpoint.url + '/api/users/login', user).then(function (result) {
                 console.log("result is : ", result);
                 if (result.data.success) {
 
