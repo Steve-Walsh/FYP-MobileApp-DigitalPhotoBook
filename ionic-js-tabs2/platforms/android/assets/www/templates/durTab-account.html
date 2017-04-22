@@ -1,10 +1,10 @@
 <ion-view view-title="Account">
     <ion-content overflow-scroll="false" class="padding">
         <ion-list>
-            <ion-toggle ng-model="settings.enableFriends">
+            <ion-toggle ng-model="options.notif" ng-change="changeOpts()">
                 Enable Notifications
             </ion-toggle>
-            <ion-toggle ng-model="settings.enableChat">
+            <ion-toggle ng-model="options.chat" ng-change="changeOpts()">
                 Enable Event Chat
             </ion-toggle>
 

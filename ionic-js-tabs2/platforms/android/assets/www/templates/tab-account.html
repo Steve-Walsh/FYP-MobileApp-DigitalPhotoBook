@@ -1,13 +1,12 @@
 <ion-view view-title="Account">
     <ion-content overflow-scroll="false" class="padding">
         <ion-list>
-            <ion-toggle ng-model="settings.enableFriends">
-                Enable Notifications
-            </ion-toggle>
-            <ion-toggle ng-model="settings.enableChat">
-                Enable Event Chat
-            </ion-toggle>
-
+                <ion-toggle ng-model="options.notif" ng-change="changeOpts()">
+                    Enable Notifications
+                </ion-toggle>
+                <ion-toggle ng-model="options.chat" ng-change="changeOpts()">
+                    Enable Event Chat
+                </ion-toggle>
 
 <a href="#/durTab/durEvent" id="login-button4" class="button button-calm  button-block" ng-if="event != null">Go to Current Event</a>
 

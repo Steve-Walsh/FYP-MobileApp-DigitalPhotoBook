@@ -1,7 +1,7 @@
 angular.module('starter.services', [])
 
 
-.service('AuthService', function ($q, $http, ApiEndpoint, $ionicPush) {
+.service('AuthService', function ($q, $http, ApiEndpoint, $ionicPush, Options) {
     var LOCAL_TOKEN_KEY = 'photoApp-token';
     var isAuthenticated = false;
     var authToken;
@@ -23,14 +23,19 @@ angular.module('starter.services', [])
     }
 
     var currentUser = function () {
-        console.log("before push ")
-        $ionicPush.register().then(function (t) {
-            console.log($ionicPush.saveToken(t))
-            return $ionicPush.saveToken(t);
-        }).then(function (t) {
-            console.log('Token saved:', t.token);
-        });
-
+        var getOpts = Options.getOptions();
+        var options = JSON.parse(getOpts)
+        var res
+        if (options.notif == true) {
+            $ionicPush.register().then(function (t) {
+                console.log($ionicPush.saveToken(t))
+                return $ionicPush.saveToken(t);
+            }).then(function (t) {
+                res = t
+                console.log('Token saved:', t.token);
+            });
+            console.log(res)
+        }
         if (isAuthenticated) {
             var token = window.localStorage['photoApp-token'];
             var payload = token.split('.')[1];
@@ -130,15 +135,50 @@ angular.module('starter.services', [])
     $httpProvider.interceptors.push('AuthInterceptor');
 })
 
+.service('Options', function (ApiEndpoint, $http, $q) {
+    var LOCAL_EVENT_KEY = "options";
 
+
+    function setOptionsToken(options) {
+        window.localStorage.setItem(LOCAL_EVENT_KEY, options)
+    }
+
+    function setOptionsAPI(options) {
+        console.log("called set opts")
+        var item = JSON.stringify(options)
+        window.localStorage.setItem(LOCAL_EVENT_KEY, item)
+    }
+
+
+    var getOptionsAPI = function () {
+        var options = window.localStorage.getItem(LOCAL_EVENT_KEY);
+        if (options == null) {
+            //var option = [{ name: "notif", checked: true }, { name: "chat", checked: true }]
+            var option = {notif :true,chat: true }
+            setOptionsToken(JSON.stringify(option))
+            return option
+        }
+        return options;
+     }
+
+     return {
+         changeOptions: function (options) {
+             return setOptionsAPI(options)
+
+         },
+         getOptions: function () {
+             return getOptionsAPI();
+         }
+     };
+
+})
 
 
 .service('Events', function (ApiEndpoint, $http, $q, AuthService) {
-
+    var LOCAL_EVENT_KEY = "eventToken";
     addPersonToEvent = function (newAttender, eventId) {
         console.log("add person called")
         var check = false
-
         $http.get(ApiEndpoint.url + 'api/events/eventDetails/' + eventId, {
             headers: {
                 Authorization: 'Bearer ' + AuthService.getToken()
@@ -166,7 +206,6 @@ angular.module('starter.services', [])
             }
         })
     }
-
     leaveAnEvent = function (user) {
         $http.post(ApiEndpoint.url + 'api/events/removeUser', user, {
             headers: {
@@ -177,9 +216,7 @@ angular.module('starter.services', [])
             console.log('error : ' + err)
         })
     }
-
-    var LOCAL_EVENT_KEY = "eventToken";
-
+    
     var myEvents = {
         "data": [{
             image: "/image/picOne"
@@ -188,7 +225,6 @@ angular.module('starter.services', [])
         image: "image/picTwo"
     }]
     }
-
     var getEvent = function (id) {
         $http.get(ApiEndpoint.url + 'api/events/event/' + id, {
             headers: {
@@ -199,14 +235,11 @@ angular.module('starter.services', [])
             return res.data.event;
         })
     };
-
     var getEventIdAPI = function () {
         var eventId = window.localStorage.getItem(LOCAL_EVENT_KEY);
         console.log("id is ",eventId)
         return eventId;
-
     }
-
     var getCurrentEvent = function (loggedInUser) {
         $http.get(ApiEndpoint.url + "api/events/myEvents/" + loggedInUser.id, {
             headers: {
@@ -227,16 +260,12 @@ angular.module('starter.services', [])
             }
         })
     }
-
     function setEventToken(id) {
         window.localStorage.setItem(LOCAL_EVENT_KEY, id)
     }
     function delEventToken() {
         window.localStorage.removeItem(LOCAL_EVENT_KEY)
     }
-
-
-
     return {
         get: function (id) {
             return getEvent(id);
@@ -251,6 +280,8 @@ angular.module('starter.services', [])
        }
     };  
 })
+
+
 
 .service('chatSocket', function (ApiEndpoint, socketFactory) {
 

@@ -129,7 +129,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('AccountCtrl', function ($scope, $state, AuthService, $rootScope, $ionicUser, $ionicPush, Events) {
+.controller('AccountCtrl', function ($scope, $state, AuthService, $rootScope, $ionicUser, $ionicPush, Events, Options) {
 
 
 
@@ -139,12 +139,50 @@ angular.module('starter.controllers', [])
     $scope.eventDetails = Events.currentEvent(loggedInUser)
 
     $scope.event = Events.getEventId()
+    var getOpts = Options.getOptions();
+    $scope.options = JSON.parse(getOpts)
 
     //    .success(function (res) {
     //    console.log("res is", res)
     //})
     //console.log("even is ", $scope.event)
     });
+
+    //$scope.changeOption = function () {
+    //    var options
+    //    console.log($scope.options.notif)
+
+    //    //options.notif = $scope.options.notif
+    //    //options.chat = $scope.options.chat
+    //    //Options.setOptions(options)
+
+    //}
+
+    $scope.changeOpts = function () {
+
+        console.log($scope.options.notif + " / " + $scope.options.chat)
+        var opts = { notif: $scope.options.notif, chat: $scope.options.chat }
+        Options.changeOptions(opts)
+    //    if ($scope.notif == false) {
+    //        $scope.notif = true;
+    //    }
+    //    else {
+    //        $scope.notif = false;
+    //    }
+    //    Options.setNotif($scope.notif)
+    //};
+    //$scope.changeChat = function () {
+    //    if ($scope.chat == false) {
+    //        $scope.chat = true;
+    //    }
+    //    else {
+    //        $scope.chat = false;
+    //    }
+        //Options.setNotif($scope.chat)
+
+    };
+
+
 
 
     $scope.logout = function () {
@@ -196,7 +234,7 @@ angular.module('starter.controllers', [])
  })
 
 
-.controller('DurPicturesCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state, $cordovaFileTransfer) {
+.controller('DurPicturesCtrl', function ($scope, $cordovaCamera, $cordovaFile, $http, ApiEndpoint, $ionicPopup, $state, $cordovaFileTransfer, Events) {
     //TODO remove hard coded event
     $scope.$on('$ionicView.enter', function (e) {
         $scope.imgURI = null;
@@ -276,6 +314,10 @@ angular.module('starter.controllers', [])
             }
         }).then(function (res) {
 
+            if (res.data.event.endTime < moment()) {
+                console.log("event over");
+            }
+
             $scope.event = res.data.event;
         })
 
@@ -284,7 +326,7 @@ angular.module('starter.controllers', [])
 
 })
 
-.controller('DurChatCtrl', function ($scope, ApiEndpoint, chatSocket, AuthService, $ionicScrollDelegate, Events) {
+.controller('DurChatCtrl', function ($scope, ApiEndpoint, chatSocket, AuthService, $ionicScrollDelegate, Events, Options) {
 
     $scope.data = {};
     $scope.loggedInUser = AuthService.getLoggedInUser()
@@ -292,8 +334,14 @@ angular.module('starter.controllers', [])
 
 
     $scope.$on('$ionicView.enter', function (e) {
-        chatSocket.emit("connect")
-        $ionicScrollDelegate.scrollBottom();
+
+        var getOpts = Options.getOptions();
+        $scope.options = JSON.parse(getOpts)
+
+        if ($scope.options.chat == true) {
+            chatSocket.emit("connect")
+            $ionicScrollDelegate.scrollBottom();
+        }
     })
 
 
@@ -321,7 +369,7 @@ angular.module('starter.controllers', [])
 
 
 
-        $scope.message = '';
+        $scope.data.message = '';
 
         chatSocket.emit('new message', msg);
     };

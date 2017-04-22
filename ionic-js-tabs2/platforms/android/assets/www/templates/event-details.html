@@ -13,8 +13,9 @@
         <div>Event Location is : {{event.location}}</div>
         <div>Event starting : {{event.startTime | date:"dd/MM/yyyy 'at' h:mma"}}  </div>
         <div>Event ending : {{event.endTime | date:"dd/MM/yyyy 'at' h:mma"}}</div>
-        <div ng-if="event.attenders.length == 0"> There is 30 people attending this event</div><div ng-if="event.attenders.length > 0"> {{event.attenders.length}}</div>
-        <div ng-if="event.pictures.length == 0"> There is 150 pictures at this event</div><div ng-if="event.pictures.length > 0"> {{event.pictures.length}}</div>
+        <div ng-if="event.attenders.length == 0"> There is 1 attender </div><div ng-if="event.attenders.length > 0">There are {{event.attenders.length}} people attending this event</div>
+        <div ng-if="event.pictures.length == 0">There are no pictures yet! Be the first to upload one!</div><div ng-if="event.pictures.length > 0">There are {{event.pictures.length}} pictures taken so far!</div>
+
      
     </p>
       <div ng-if="check"><button id="login-button1" ng-click="leaveEvent(event)" class="button button-assertive  button-block">Leave Event</button></div>
