@@ -247,8 +247,10 @@ angular.module('starter.services', [])
             }
         }).success(function (res) {
            var check = true
-            res.forEach(function(item){
-                if (moment(item.startTime) < moment() < moment(item.endTime)) {
+           res.forEach(function (item) {
+               //console.log("item " + item.startTime + "  start time : " + moment(item.startTime).humanize() + " now " + moment().humanize() + "  end time : " + moment(item.endTime).humanize())
+               console.log(moment().isBetween(item.startTime, item.endTime))
+               if (moment().isBetween(item.startTime, item.endTime)) {
                     setEventToken(item._id)
                     check = false
                     console.log("in loop", item)
