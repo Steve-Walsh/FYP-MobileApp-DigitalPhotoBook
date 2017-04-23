@@ -1,22 +1,29 @@
 <ion-view hide-nav-bar="true">
-  <ion-content padding="true" class="has-header" overflow-scroll="false">
-    <form id="signup-form2" class="list">
-      <ion-list id="signup-list2">
-        <label class="item item-input" id="signup-input3">
-          <span class="input-label">Name</span>
-          <input type="text" placeholder="" ng-model="data.name">
-        </label>
-        <label class="item item-input" id="signup-input4">
-          <span class="input-label">Email</span>
-          <input type="text" placeholder="" ng-model="data.email">
-        </label>
-        <label class="item item-input" id="signup-input5">
-          <span class="input-label">Password</span>
-          <input type="text" placeholder="" ng-model="data.password">
-        </label>
-      </ion-list>
-      <button id="signup-button3" ng-click="signup()" class="button button-balanced  button-block">Sign up</button>
-      <a href="/#/login" id="signup-button5" class="button button-balanced  button-block button-clear">Log in</a>
-    </form>
-  </ion-content>
+    <ion-content padding="true" class="pading" overflow-scroll="false">
+        <form id="userDetails" class="list" style="text-align: center">
+            <div style="margin: 0 auto;">
+                <img src="img/icon.png" style="height: 150px;">
+            </div>
+            <h3 style="text-align: center ;" class="balanced"> Register Your account</h3>
+            <div class="spacer" style="height: 20px;"></div>
+            <ion-list id="login-list1">
+                <label class="item item-input" id="signup-input3">
+                    <span class="input-label">Name</span>
+                    <input type="text" placeholder="" ng-model="data.name">
+                </label>
+                <label class="item item-input" id="signup-input4">
+                    <span class="input-label">Email</span>
+                    <input type="text" placeholder="" ng-model="data.email">
+                </label>
+                <label class="item item-input" id="signup-input5">
+                    <span class="input-label">Password</span>
+                    <input type="text" placeholder="" ng-model="data.password">
+                </label>
+            </ion-list>
+            <div class="spacer" style="height: 20px;"></div>
+
+            <button id="signup-button3" ng-click="signup()" class="button button-balanced  button-block">Sign up</button>
+            <a href="/#/login" id="signup-button5" class="button button-balanced  button-block button-clear">Already have an account? Log in</a>
+        </form>
+    </ion-content>
 </ion-view>

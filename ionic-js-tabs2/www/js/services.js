@@ -35,6 +35,8 @@ angular.module('starter.services', [])
                 console.log('Token saved:', t.token);
             });
             console.log(res)
+        } else {
+            $ionicPush.unregister()
         }
         if (isAuthenticated) {
             var token = window.localStorage['photoApp-token'];

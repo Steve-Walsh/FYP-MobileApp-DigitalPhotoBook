@@ -271,6 +271,7 @@ angular.module('starter.controllers', [])
             console.log("Code = " + r.responseCode);
             console.log("Response = " + r.response);
             console.log("Sent = " + r.bytesSent);
+            alert("File Uploaded!")
         }
         function fail(error) {
             alert("An error has occurred: Code = " + error.code);
@@ -297,7 +298,7 @@ angular.module('starter.controllers', [])
                 loadingStatus.increment();
             }
         };
-        ft.upload(fileURL, uri, win, fail, options);
+        ft.upload(fileURL, uri, win, fail, options)
     }
 
  
@@ -329,11 +330,12 @@ angular.module('starter.controllers', [])
 .controller('DurChatCtrl', function ($scope, ApiEndpoint, chatSocket, AuthService, $ionicScrollDelegate, Events, Options) {
 
     $scope.data = {};
-    $scope.loggedInUser = AuthService.getLoggedInUser()
-    var eventId = Events.getEventId()
+    var eventId
 
 
     $scope.$on('$ionicView.enter', function (e) {
+    $scope.loggedInUser = AuthService.getLoggedInUser()
+    eventId = Events.getEventId()
 
         var getOpts = Options.getOptions();
         $scope.options = JSON.parse(getOpts)
@@ -362,16 +364,19 @@ angular.module('starter.controllers', [])
             'text': $scope.data.message,
             'time': moment()
         };
-        if ($scope.data.message != null) {
+        console.log($scope.data.message, " / ", msg.test)
+        console.log("type", typeof $scope.data.message)
+        if ($scope.data.message) {
             $scope.chatMessages.push(msg);
             $ionicScrollDelegate.scrollBottom();
+            chatSocket.emit('new message', msg);
         }
 
 
 
         $scope.data.message = '';
 
-        chatSocket.emit('new message', msg);
+       
     };
 
 
@@ -390,6 +395,7 @@ angular.module('starter.controllers', [])
             $ionicScrollDelegate.scrollBottom();
             console.log($scope.chatMessages)
         }
+        $ionicScrollDelegate.scrollBottom();
   
     });
 

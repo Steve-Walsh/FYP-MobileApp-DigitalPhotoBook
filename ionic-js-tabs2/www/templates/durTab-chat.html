@@ -1,47 +1,45 @@
 ﻿<ion-view title="Event Chat" >
 
     <ion-content class="padding" overflow-scroll="false">
+            <div ng-if="!options.chat"> Please Enable Chat under account</div>
+            <div ng-if="options.chat">
 
-        <div ng-if="!options.chat"> Please Enable Chat under account</div>
-        <div ng-if="options.chat">
-            <div class="list" id="messages" ng-if="chatMessages.length > 0">
-                <li class="item item-text-wrap no-border" ng-repeat="msg in chatMessages">
-                    <div class="msg">
-                        <div class="details padding" ng-if="msg.user == loggedInUser.email" style="text-align: right !important;">
-                            <p>
-                                <div class="user">{{ msg.user }}</div>
-                                <div class="message">{{ msg.text }}</div>
-                            </p>
-                            <small>{{ humanize(msg.time) }}</small>
+                <div class="list" id="messages" ng-if="chatMessages.length > 0">
+                    <li class="item item-text-wrap no-border" ng-repeat="msg in chatMessages">
+                        <div class="msg">
+                            <div class="details padding" ng-if="msg.user == loggedInUser.email" style="text-align: right !important;">
+                                <p>
+                                    <div class="user">{{ msg.user }}</div>
+                                    <div class="message">{{ msg.text }}</div>
+                                </p>
+                                <small>{{ humanize(msg.time) }}</small>
+                            </div>
+                            <div class="details padding" ng-if="msg.user != loggedInUser.email">
+                                <p>
+                                    <div class="user">{{ msg.user }}</div>
+                                    <div class="message">{{ msg.text }}</div>
+                                </p>
+                                <small>{{ humanize(msg.time) }}</small>
+                            </div>
                         </div>
-                        <div class="details padding" ng-if="msg.user != loggedInUser.email">
-                            <p>
-                                <div class="user">{{ msg.user }}</div>
-                                <div class="message">{{ msg.text }}</div>
-                            </p>
-                            <small>{{ humanize(msg.time) }}</small>
-                        </div>
+                    </li>
+                </div>
+
+                <div class="card" ng-if="!chatMessages.length">
+                    <div class="item item-text-wrap">
+                        No messages yet.
                     </div>
-                </li>
-            </div>
-
-            <div class="card" ng-if="!chatMessages.length">
-                <div class="item item-text-wrap">
-                    No messages yet.
                 </div>
             </div>
-        </div>
+        </ion-content>
 
-    </ion-content>
-
-    <div ng-if="options.chat">
+  
         <ion-footer-bar class="bar bar-footer bar-positive item-input-inset has-content">
-            <label class="item-input-wrapper">
-                <input type="text" id="message" name="message" ng-model="data.message" placeholder="Type message">
-            </label>
-            <a class="button button-icon icon ion-android-send" ng-click="sendTextMessage()"></a>
-        </ion-footer-bar>
-    </div>
+                <label class="item-input-wrapper">
+                    <input type="text" id="message" name="message" ng-model="data.message" placeholder="Type message">
+                </label>
+                <a class="button button-icon icon ion-android-send" ng-click="sendTextMessage()"></a>
+</ion-footer-bar>
 
 </ion-view>
 
