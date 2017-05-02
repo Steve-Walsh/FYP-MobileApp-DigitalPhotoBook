@@ -20,14 +20,14 @@ Digital Photo Book requires
   - [Ionic](https://ionicframework.com/docs/intro/installation/) v2+ 
   - [Cordova](https://cordova.apache.org/)
   
- >This was build using Visual Studios, shouldnt require it to run the application, if you are having issues try running in Visual Studios
+ >This was built using Visual Studios, shouldnt require it to run the application, if you are having issues try running in Visual Studios
   
   
 Install the dependencies and devDependencies and start the server.
 ```sh
 $ cd ionic-js-tabs2
 $ ionic install
-$ ionic server
+$ ionic serve
 ```
 
 To build APK and/or IPA.
